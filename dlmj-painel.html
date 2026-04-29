@@ -7,300 +7,346 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
 <style>
 :root{
-  --navy:#0f2044;
-  --navy2:#1a3260;
+  --navy:#0d1f3c;
+  --navy2:#162848;
   --blue:#1e4080;
-  --blue-light:#e8eef7;
-  --blue-mid:#b8cde8;
   --accent:#2563b0;
-  --text:#0f2044;
-  --text2:#4a5a7a;
-  --bg:#f0f4fa;
-  --white:#fff;
-  --border:#d0daea;
+  --accent-light:#3b82f6;
+  --bg:#f0f3f8;
+  --white:#ffffff;
+  --border:#dde3ef;
+  --border2:#c8d3e8;
+  --text:#0d1f3c;
+  --text2:#5a6a8a;
+  --text3:#8a9ab8;
   --meta:#1877f2;
+  --meta-bg:#eff5ff;
   --google:#ea4335;
+  --google-bg:#fff0ee;
   --both:#7c3aed;
+  --both-bg:#f3eeff;
+  --success:#16a34a;
+  --success-bg:#dcfce7;
+  --warn:#d97706;
+  --warn-bg:#fef3c7;
+  --shadow:0 1px 3px rgba(13,31,60,.08),0 4px 16px rgba(13,31,60,.06);
+  --shadow-lg:0 4px 24px rgba(13,31,60,.12),0 1px 4px rgba(13,31,60,.06);
+  --radius:10px;
+  --radius-lg:14px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;-webkit-font-smoothing:antialiased}
 
 /* TOPBAR */
-.topbar{background:var(--navy);padding:0 28px;display:flex;align-items:center;gap:16px;height:60px;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(15,32,68,.18)}
-.topbar-logo{display:flex;align-items:center;gap:12px}
-.topbar-logo svg{width:54px;height:28px}
-.topbar-divider{width:1px;height:28px;background:rgba(255,255,255,.15)}
-.topbar-sys{font-size:12px;color:rgba(255,255,255,.6);letter-spacing:.5px;text-transform:uppercase}
-.topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px}
-.save-status{font-size:11px;color:rgba(255,255,255,.5)}
+.topbar{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:0 32px;display:flex;align-items:center;gap:16px;height:56px;position:sticky;top:0;z-index:50;box-shadow:0 2px 16px rgba(13,31,60,.25)}
+.logo-mark{display:flex;align-items:center;gap:10px}
+.logo-text{font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.5px}
+.logo-sub{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;display:block;margin-top:-2px}
+.topbar-sep{width:1px;height:24px;background:rgba(255,255,255,.12)}
+.topbar-title{font-size:12px;color:rgba(255,255,255,.5);letter-spacing:.8px;text-transform:uppercase;font-weight:500}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.save-pill{font-size:11px;color:rgba(255,255,255,.45);background:rgba(255,255,255,.08);padding:4px 10px;border-radius:20px;transition:all .3s}
+.btn-new{background:var(--accent-light);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;gap:6px}
+.btn-new:hover{background:#2d6fd4;transform:translateY(-1px);box-shadow:0 4px 12px rgba(59,130,246,.4)}
 
-/* TABS */
-.main-tabs{background:var(--navy2);display:flex;gap:0;padding:0 28px}
-.main-tab{padding:12px 20px;font-size:13px;cursor:pointer;border:none;background:transparent;color:rgba(255,255,255,.55);border-bottom:2px solid transparent;font-family:inherit;transition:all .15s}
-.main-tab.active{color:#fff;border-bottom:2px solid #fff}
-.main-tab:hover{color:rgba(255,255,255,.85)}
+/* NAV */
+.nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 32px;display:flex;gap:0}
+.nav-tab{padding:14px 20px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--text2);border-bottom:2px solid transparent;font-family:inherit;transition:all .15s;display:flex;align-items:center;gap:7px}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+.nav-tab:hover:not(.active){color:var(--text);border-bottom-color:var(--border2)}
+.nav-icon{font-size:15px}
 
-/* LAYOUT */
-.page{display:none;padding:24px}.page.active{display:block}
-.container{max-width:1200px;margin:0 auto}
+/* PÁGINAS */
+.page{display:none;padding:28px 32px}.page.active{display:block}
+.container{max-width:1240px;margin:0 auto}
 
 /* MÉTRICAS */
-.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
-.metric{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;border-top:3px solid var(--accent)}
-.metric-label{font-size:11px;color:var(--text2);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px}
-.metric-val{font-size:24px;font-weight:700;color:var(--navy)}
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.metric{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}
+.metric:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.metric-icon{font-size:22px;margin-bottom:10px}
+.metric-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:6px}
+.metric-val{font-size:28px;font-weight:800;color:var(--text)}
+.metric-bar{position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--radius-lg) var(--radius-lg) 0 0}
+.bar-navy{background:linear-gradient(90deg,var(--accent),var(--accent-light))}
+.bar-gray{background:linear-gradient(90deg,#94a3b8,#cbd5e1)}
+.bar-meta{background:linear-gradient(90deg,#1877f2,#42a5f5)}
+.bar-google{background:linear-gradient(90deg,#ea4335,#f97316)}
 
-/* ALERTAS */
-.alert-block{border-radius:8px;padding:12px 16px;margin-bottom:8px;border:1px solid}
-.alert-danger{background:#fef0f0;border-color:#f7b8b8}
-.alert-warn{background:#fef6e8;border-color:#fde8c0}
-.alert-info{background:var(--blue-light);border-color:var(--blue-mid)}
-.alert-none{background:#f5f7fa;border-color:var(--border)}
-.alert-title{font-size:12px;font-weight:600;margin-bottom:5px}
-.alert-danger .alert-title{color:#6e1010}
-.alert-warn .alert-title{color:#7a4400}
-.alert-info .alert-title{color:var(--navy)}
-.alert-item{font-size:12px;color:#333;margin-bottom:2px}
+/* TOOLBAR */
+.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px}
+.search-wrap{position:relative;flex:1;max-width:320px}
+.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text3)}
+.search-input{width:100%;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:9px 12px 9px 36px;font-size:13px;outline:none;font-family:inherit;color:var(--text);transition:border .15s,box-shadow .15s}
+.search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,176,.1)}
 
-/* COLUNAS ATIVO/INATIVO */
-.kanban{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}
-.kanban-col{background:var(--white);border:1px solid var(--border);border-radius:12px;min-height:400px;display:flex;flex-direction:column}
-.kanban-col-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;border-radius:12px 12px 0 0}
-.kanban-col-header.ativos{background:var(--navy)}
-.kanban-col-header.inativos{background:#6b7a99}
-.kanban-col-title{font-size:13px;font-weight:700;color:#fff}
-.kanban-col-count{font-size:11px;background:rgba(255,255,255,.2);color:#fff;padding:2px 8px;border-radius:10px}
-.kanban-body{flex:1;padding:12px;display:flex;flex-direction:column;gap:8px}
-.kanban-body.drag-over{background:var(--blue-light);border-radius:0 0 12px 12px}
+/* KANBAN */
+.kanban{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.kcol{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)}
+.kcol-head{padding:16px 20px;display:flex;align-items:center;gap:10px}
+.kcol-head.active{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%)}
+.kcol-head.inactive{background:linear-gradient(135deg,#4a5568 0%,#6b7280 100%)}
+.kcol-title{font-size:14px;font-weight:700;color:#fff;flex:1}
+.kcol-badge{background:rgba(255,255,255,.2);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px}
+.kcol-body{background:var(--white);min-height:420px;padding:14px;display:flex;flex-direction:column;gap:10px;border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius-lg) var(--radius-lg);transition:background .15s}
+.kcol-body.drag-over{background:#eef4ff;border-color:var(--accent)}
+.kcol-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;min-height:200px;color:var(--text3);font-size:13px;gap:8px;padding:40px}
+.kcol-empty-icon{font-size:32px;opacity:.4}
 
-/* CARD DO CLIENTE */
-.client-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 14px;cursor:pointer;transition:all .15s;user-select:none}
-.client-card:hover{border-color:var(--accent);box-shadow:0 2px 8px rgba(30,64,128,.1)}
-.client-card.dragging{opacity:.4;transform:scale(.97)}
-.client-card[draggable=true]{cursor:grab}
-.card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
-.card-name{font-weight:700;font-size:13px;color:var(--navy)}
-.card-tipo{font-size:11px;color:var(--text2);margin-top:2px}
-.card-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
-.card-bottom{display:flex;align-items:center;justify-content:space-between}
-.card-invest{font-size:12px;color:var(--text2)}
-.card-invest strong{color:var(--navy);font-size:13px}
-.card-otim{font-size:11px;color:#aaa}
-.card-actions{display:flex;gap:6px;margin-top:8px;border-top:1px solid var(--border);padding-top:8px}
-
-/* BADGES */
-.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
-.b-meta{background:#e7f0fd;color:#1877f2}
-.b-google{background:#fce8e6;color:#c5221f}
-.b-ambos{background:#f3e8ff;color:#6d28d9}
-.b-outro{background:#f0f1f3;color:#444}
-.b-ativo{background:#dcfce7;color:#166534}
-.b-inativo{background:#f1f5f9;color:#64748b}
-.dias-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
-
-/* INVEST BARS */
-.invest-bar{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:12px}
-.invest-platform{width:70px;font-weight:600;font-size:11px}
-.invest-val{color:var(--navy);font-weight:700}
-.invest-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+/* CARDS */
+.ccard{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;cursor:grab;transition:all .18s;box-shadow:0 1px 3px rgba(13,31,60,.06)}
+.ccard:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(37,99,176,.12);transform:translateY(-1px)}
+.ccard.dragging{opacity:.35;transform:scale(.97);box-shadow:none}
+.ccard-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.ccard-name{font-weight:700;font-size:14px;color:var(--text);line-height:1.3}
+.ccard-tipo{font-size:11px;color:var(--text3);margin-top:2px;font-weight:500}
+.ccard-plat{margin-bottom:10px}
+.ccard-invest{background:var(--bg);border-radius:7px;padding:8px 10px;margin-bottom:10px}
+.invest-row{display:flex;align-items:center;gap:8px;font-size:12px}
+.invest-row+.invest-row{margin-top:4px}
+.invest-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .dot-meta{background:var(--meta)}
 .dot-google{background:var(--google)}
+.invest-plat{font-weight:600;width:55px;color:var(--text2)}
+.invest-val{font-weight:700;color:var(--text)}
+.ccard-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border)}
+.otim-label{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
+.ccard-actions{display:flex;gap:6px}
 
-/* PÁGINA CLIENTE */
-.back-btn{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);cursor:pointer;margin-bottom:20px;width:fit-content}
-.back-btn:hover{color:var(--navy)}
-.client-header{background:var(--navy);border-radius:12px;padding:24px;margin-bottom:20px;color:#fff}
-.client-header-name{font-size:22px;font-weight:700;margin-bottom:6px}
-.client-header-meta{display:flex;gap:8px;margin-bottom:16px;align-items:center}
-.client-info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.info-box{background:rgba(255,255,255,.1);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,.15)}
-.info-box-label{font-size:11px;color:rgba(255,255,255,.6);margin-bottom:3px;text-transform:uppercase;letter-spacing:.3px}
-.info-box-val{font-size:15px;font-weight:700;color:#fff}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.feed-wrap{background:var(--white);border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;height:560px}
-.feed-title{padding:14px 16px;border-bottom:1px solid var(--border);font-size:13px;font-weight:700;color:var(--navy);background:var(--blue-light);border-radius:12px 12px 0 0}
-.feed-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
-.feed-msg{background:var(--blue-light);border-radius:8px;padding:10px 12px;border-left:3px solid var(--accent)}
-.feed-msg-date{font-size:11px;color:var(--text2);margin-bottom:4px;font-weight:600}
-.feed-msg-text{font-size:13px;line-height:1.55;white-space:pre-wrap;color:var(--text)}
-.feed-msg-actions{display:flex;gap:6px;margin-top:6px;opacity:0;transition:opacity .15s}
-.feed-msg:hover .feed-msg-actions{opacity:1}
-.feed-input-area{padding:12px 16px;border-top:1px solid var(--border)}
-.feed-input-row{display:flex;gap:8px}
-.feed-textarea{flex:1;font-family:inherit;font-size:13px;color:var(--text);background:#f5f7fa;border:1px solid var(--border);border-radius:8px;padding:9px 12px;outline:none;resize:none;line-height:1.5}
-.feed-textarea:focus{border-color:var(--accent);background:#fff}
-.side-wrap{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px}
-.side-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-
-/* MODAL */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(10,20,50,.5);z-index:100;align-items:center;justify-content:center}
-.modal-bg.open{display:flex}
-.modal{background:var(--white);border-radius:14px;border:1px solid var(--border);padding:28px;width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 12px 40px rgba(15,32,68,.18)}
-.modal-header{display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
-.modal-header h3{font-size:16px;font-weight:700;color:var(--navy)}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-.frow1{margin-bottom:14px}
-label{font-size:12px;color:var(--text2);display:block;margin-bottom:4px;font-weight:500}
-input,select,textarea{font-family:inherit;font-size:13px;color:var(--text);background:#f5f7fa;border:1px solid var(--border);border-radius:6px;padding:8px 10px;outline:none;width:100%;transition:border .15s}
-input:focus,select:focus,textarea:focus{border-color:var(--accent);background:#fff}
-textarea{resize:vertical}
-.invest-fields{background:var(--blue-light);border-radius:8px;padding:14px;margin-bottom:14px;border:1px solid var(--blue-mid)}
-.invest-fields-title{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px}
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:600;letter-spacing:.2px}
+.b-meta{background:var(--meta-bg);color:var(--meta)}
+.b-google{background:var(--google-bg);color:var(--google)}
+.b-ambos{background:var(--both-bg);color:var(--both)}
+.b-outro{background:#f1f5f9;color:#475569}
 
 /* BOTÕES */
-.btn{padding:8px 18px;border-radius:6px;font-size:13px;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--text);font-family:inherit;transition:all .15s;font-weight:500}
-.btn:hover{background:#f0f4fa}
-.btn-p{background:var(--navy);color:#fff;border-color:var(--navy)}
-.btn-p:hover{background:var(--blue)}
-.btn-sm{padding:3px 9px;font-size:11px}
-.btn-danger{color:#6e1010;border-color:#f7b8b8}.btn-danger:hover{background:#fbd8d8}
-.btn-ghost{background:transparent;border:none;color:var(--text2);padding:4px 8px}.btn-ghost:hover{color:var(--navy);background:var(--blue-light)}
-.no-data{text-align:center;color:#aaa;padding:32px;font-size:13px}
-.loading{text-align:center;color:#aaa;padding:48px;font-size:13px}
-.spinner{display:inline-block;width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
-@keyframes spin{to{transform:rotate(360deg)}}
+.btn{padding:7px 14px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--text);font-family:inherit;transition:all .15s}
+.btn:hover{background:var(--bg)}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{background:var(--blue)}
+.btn-danger{color:#dc2626;border-color:#fecaca;background:#fff}.btn-danger:hover{background:#fef2f2}
+.btn-ghost{background:transparent;border:none;color:var(--text2);padding:5px 8px;font-size:12px}.btn-ghost:hover{color:var(--text);background:var(--bg)}
+.btn-sm{padding:4px 10px;font-size:11px;border-radius:6px}
+.btn-icon{width:30px;height:30px;padding:0;display:flex;align-items:center;justify-content:center;font-size:14px}
 
-.top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:10px}
-.search-input{background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:13px;width:220px;outline:none;font-family:inherit}
-.search-input:focus{border-color:var(--accent)}
+/* PÁGINA CLIENTE */
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);cursor:pointer;margin-bottom:22px;padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:var(--white);font-weight:500;transition:all .15s}
+.back-btn:hover{color:var(--accent);border-color:var(--accent)}
+.ch-hero{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:24px;box-shadow:var(--shadow-lg)}
+.ch-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
+.ch-name{font-size:24px;font-weight:800;color:#fff;margin-bottom:6px}
+.ch-meta{display:flex;gap:8px;align-items:center}
+.ch-badge{background:rgba(255,255,255,.15);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:5px;backdrop-filter:blur(4px)}
+.ch-tipo{font-size:12px;color:rgba(255,255,255,.55);font-weight:500}
+.ch-infos{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.ch-info-box{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);border-radius:9px;padding:14px;backdrop-filter:blur(4px)}
+.ch-info-label{font-size:10px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:5px}
+.ch-info-val{font-size:16px;font-weight:700;color:#fff}
+
+/* DUAS COLUNAS */
+.two-col{display:grid;grid-template-columns:3fr 2fr;gap:20px}
+.panel{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)}
+.panel-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;background:#fafbfd}
+.panel-title{font-size:13px;font-weight:700;color:var(--text);flex:1}
+.panel-icon{font-size:16px}
+
+/* FEED */
+.feed-body{height:440px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.feed-body::-webkit-scrollbar{width:4px}
+.feed-body::-webkit-scrollbar-track{background:transparent}
+.feed-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+.feed-msg{background:#f8faff;border:1px solid var(--border);border-radius:9px;padding:12px 14px;border-left:3px solid var(--accent);transition:all .15s}
+.feed-msg:hover{border-color:var(--accent);box-shadow:0 2px 8px rgba(37,99,176,.08)}
+.feed-msg-date{font-size:11px;color:var(--text3);font-weight:600;margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.feed-msg-text{font-size:13px;line-height:1.6;white-space:pre-wrap;color:var(--text)}
+.feed-msg-del{opacity:0;transition:opacity .15s;margin-top:6px}
+.feed-msg:hover .feed-msg-del{opacity:1}
+.feed-foot{padding:14px 16px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:flex-end;background:#fafbfd}
+.feed-ta{flex:1;font-family:inherit;font-size:13px;color:var(--text);background:var(--white);border:1px solid var(--border);border-radius:8px;padding:10px 12px;outline:none;resize:none;line-height:1.55;transition:border .15s}
+.feed-ta:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,176,.08)}
+
+/* NOTAS */
+.notas-body{padding:16px}
+.notas-ta{width:100%;font-family:inherit;font-size:13px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;outline:none;resize:none;line-height:1.6;min-height:200px;transition:border .15s}
+.notas-ta:focus{border-color:var(--accent);background:var(--white);box-shadow:0 0 0 3px rgba(37,99,176,.08)}
+
+/* OTIMIZAÇÕES GLOBAIS */
+.otim-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px;border-left:3px solid var(--accent);box-shadow:0 1px 3px rgba(13,31,60,.05);transition:box-shadow .15s}
+.otim-card:hover{box-shadow:var(--shadow)}
+.otim-card-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.otim-card-name{font-weight:700;font-size:13px;color:var(--text);flex:1}
+.otim-card-date{font-size:11px;color:var(--text3);font-weight:500}
+.otim-card-text{font-size:13px;line-height:1.6;white-space:pre-wrap;color:var(--text2)}
+
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(10,20,50,.55);z-index:100;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-bg.open{display:flex}
+.modal{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);padding:0;width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(13,31,60,.2)}
+.modal-head{padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.modal-head-icon{width:36px;height:36px;background:var(--navy);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.modal-head h3{font-size:16px;font-weight:700;color:var(--text)}
+.modal-body{padding:22px 24px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.frow1{margin-bottom:16px}
+label{font-size:12px;color:var(--text2);display:block;margin-bottom:5px;font-weight:600;letter-spacing:.2px}
+input,select,textarea{font-family:inherit;font-size:13px;color:var(--text);background:#f8faff;border:1px solid var(--border);border-radius:7px;padding:9px 11px;outline:none;width:100%;transition:all .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);background:var(--white);box-shadow:0 0 0 3px rgba(37,99,176,.08)}
+textarea{resize:vertical}
+.invest-section{background:linear-gradient(135deg,#f0f6ff,#f8f4ff);border:1px solid #d0e0f8;border-radius:10px;padding:16px;margin-bottom:16px}
+.invest-section-title{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:6px}
+.modal-foot{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;background:#fafbfd;border-radius:0 0 var(--radius-lg) var(--radius-lg)}
+
+.no-data{text-align:center;color:var(--text3);padding:40px;font-size:13px}
+.loading{text-align:center;color:var(--text3);padding:56px;font-size:13px}
+.spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
-  <div class="topbar-logo">
-    <!-- Logo DLMJ SVG inline (azul escuro adaptado para fundo escuro) -->
-    <svg viewBox="0 0 120 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <text x="2" y="42" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="46" font-weight="700" fill="#ffffff" letter-spacing="-2">DLMJ</text>
-      <text x="2" y="54" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="7" fill="rgba(255,255,255,0.5)" letter-spacing="3">ASSESSORIA</text>
-    </svg>
+  <div class="logo-mark">
+    <div>
+      <div class="logo-text">DLMJ</div>
+      <span class="logo-sub">Assessoria</span>
+    </div>
   </div>
-  <div class="topbar-divider"></div>
-  <div class="topbar-sys">Sistema de Organização</div>
+  <div class="topbar-sep"></div>
+  <div class="topbar-title">Sistema de Organização</div>
   <div class="topbar-right">
-    <span class="save-status" id="saveStatus"></span>
-    <button class="btn btn-p" onclick="openModal()" id="btnNovoCliente" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff">+ Novo cliente</button>
+    <span class="save-pill" id="saveStatus"></span>
+    <button class="btn-new" onclick="openModal()" id="btnNovoCliente">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v11M1 6.5h11" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+      Novo cliente
+    </button>
   </div>
 </div>
 
-<!-- TABS -->
-<div class="main-tabs">
-  <button class="main-tab active" onclick="swTab('clientes')">Clientes</button>
-  <button class="main-tab" onclick="swTab('otimizacoes')">Otimizações</button>
+<div class="nav">
+  <button class="nav-tab active" onclick="swTab('clientes')"><span class="nav-icon">👥</span>Clientes</button>
+  <button class="nav-tab" onclick="swTab('otimizacoes')"><span class="nav-icon">📋</span>Otimizações</button>
 </div>
 
-<!-- ABA CLIENTES -->
+<!-- CLIENTES -->
 <div class="page active" id="page-clientes">
   <div class="container">
     <div class="mgrid" id="mainMetrics"></div>
-    <div id="mainAlerts" style="margin-bottom:16px"></div>
-    <div class="top-bar">
-      <input class="search-input" type="text" id="searchInput" placeholder="🔍  Buscar cliente..." oninput="renderKanban()">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <input class="search-input" type="text" id="searchInput" placeholder="Buscar cliente..." oninput="renderKanban()">
+      </div>
     </div>
     <div class="kanban">
-      <div class="kanban-col">
-        <div class="kanban-col-header ativos">
-          <span class="kanban-col-title">Clientes Ativos</span>
-          <span class="kanban-col-count" id="countAtivos">0</span>
+      <div class="kcol">
+        <div class="kcol-head active">
+          <span class="kcol-title">✅ Clientes Ativos</span>
+          <span class="kcol-badge" id="countAtivos">0</span>
         </div>
-        <div class="kanban-body" id="colAtivos" ondragover="onDragOver(event)" ondrop="onDrop(event,'Ativo')"></div>
+        <div class="kcol-body" id="colAtivos" ondragover="onDragOver(event)" ondrop="onDrop(event,'Ativo')" ondragleave="onDragLeave(event)"></div>
       </div>
-      <div class="kanban-col">
-        <div class="kanban-col-header inativos">
-          <span class="kanban-col-title">Clientes Inativos</span>
-          <span class="kanban-col-count" id="countInativos">0</span>
+      <div class="kcol">
+        <div class="kcol-head inactive">
+          <span class="kcol-title">⏸ Clientes Inativos</span>
+          <span class="kcol-badge" id="countInativos">0</span>
         </div>
-        <div class="kanban-body" id="colInativos" ondragover="onDragOver(event)" ondrop="onDrop(event,'Inativo')"></div>
+        <div class="kcol-body" id="colInativos" ondragover="onDragOver(event)" ondrop="onDrop(event,'Inativo')" ondragleave="onDragLeave(event)"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ABA OTIMIZAÇÕES (lista geral) -->
+<!-- OTIMIZAÇÕES -->
 <div class="page" id="page-otimizacoes">
   <div class="container">
-    <div style="font-size:13px;color:var(--text2);margin-bottom:16px">Todas as otimizações registradas, ordem mais recente.</div>
+    <div style="margin-bottom:20px">
+      <div style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px">Todas as Otimizações</div>
+      <div style="font-size:13px;color:var(--text2)">Histórico completo em ordem cronológica.</div>
+    </div>
     <div id="allOtimList"></div>
   </div>
 </div>
 
-<!-- PÁGINA DO CLIENTE -->
+<!-- CLIENTE -->
 <div class="page" id="page-cliente">
   <div class="container">
-    <div class="back-btn" onclick="goMain()">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <button class="back-btn" onclick="goMain()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 11L5 7l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Voltar para clientes
-    </div>
-    <div class="client-header">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between">
+    </button>
+    <div class="ch-hero">
+      <div class="ch-top">
         <div>
-          <div class="client-header-name" id="ch-nome"></div>
-          <div class="client-header-meta" id="ch-meta"></div>
+          <div class="ch-name" id="ch-nome"></div>
+          <div class="ch-meta" id="ch-meta"></div>
         </div>
         <div style="display:flex;gap:8px">
-          <button class="btn" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff" onclick="editCurrentCliente()">Editar</button>
-          <button class="btn btn-danger" style="background:rgba(255,100,100,.15);border-color:rgba(255,100,100,.3);color:#ffaaaa" onclick="deleteCurrentCliente()">Excluir cliente</button>
+          <button class="btn" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff;font-size:12px" onclick="editCurrentCliente()">✏️ Editar</button>
+          <button class="btn btn-danger" style="background:rgba(220,38,38,.15);border-color:rgba(220,38,38,.3);color:#fca5a5;font-size:12px" onclick="deleteCurrentCliente()">🗑 Excluir</button>
         </div>
       </div>
-      <div class="client-info-grid" id="ch-info" style="margin-top:16px"></div>
+      <div class="ch-infos" id="ch-info"></div>
     </div>
     <div class="two-col">
-      <div class="feed-wrap">
-        <div class="feed-title">📋 Otimizações</div>
-        <div class="feed-messages" id="feedMessages"></div>
-        <div class="feed-input-area">
-          <div class="feed-input-row">
-            <textarea class="feed-textarea" id="feedInput" rows="2" placeholder="Descreva a otimização feita hoje... (Ctrl+Enter para enviar)"></textarea>
-            <button class="btn btn-p" style="align-self:flex-end" onclick="addFeedMsg()">Enviar</button>
-          </div>
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-icon">📋</span>
+          <span class="panel-title">Otimizações</span>
+          <span style="font-size:11px;color:var(--text3)">Ctrl+Enter para enviar</span>
+        </div>
+        <div class="feed-body" id="feedMessages"></div>
+        <div class="feed-foot">
+          <textarea class="feed-ta" id="feedInput" rows="2" placeholder="Descreva a otimização feita hoje..."></textarea>
+          <button class="btn btn-primary" onclick="addFeedMsg()" style="padding:10px 18px;white-space:nowrap">Enviar</button>
         </div>
       </div>
-      <div class="side-wrap">
-        <div class="side-title">📝 Anotações</div>
-        <textarea id="notasCliente" rows="8" placeholder="Observações, contrato, detalhes..." style="margin-bottom:10px"></textarea>
-        <button class="btn btn-p" style="width:100%" onclick="saveNotasCurrent()">Salvar anotações</button>
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-icon">📝</span>
+          <span class="panel-title">Anotações</span>
+        </div>
+        <div class="notas-body">
+          <textarea class="notas-ta" id="notasCliente" placeholder="Observações, contrato, detalhes do cliente..."></textarea>
+          <button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="saveNotasCurrent()">Salvar anotações</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL NOVO/EDITAR CLIENTE -->
+<!-- MODAL -->
 <div class="modal-bg" id="modalBg">
   <div class="modal">
-    <div class="modal-header">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="16" rx="4" fill="#0f2044"/><path d="M6 10h8M10 6v8" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <div class="modal-head">
+      <div class="modal-head-icon">👤</div>
       <h3 id="modalTitle">Novo cliente</h3>
     </div>
-    <div class="frow">
-      <div><label>Nome da empresa *</label><input id="f-nome" type="text" placeholder="Ex: Auto Prime Veículos"></div>
-      <div><label>Status</label><select id="f-status"><option>Ativo</option><option>Inativo</option></select></div>
-    </div>
-    <div class="frow">
-      <div><label>Plataforma</label>
-        <select id="f-plat" onchange="updateInvestFields()">
-          <option>Meta Ads</option>
-          <option>Google Ads</option>
-          <option>Meta + Google</option>
-          <option>Outro</option>
-        </select>
+    <div class="modal-body">
+      <div class="frow">
+        <div><label>Nome da empresa *</label><input id="f-nome" type="text" placeholder="Ex: Auto Prime Veículos"></div>
+        <div><label>Status</label><select id="f-status"><option>Ativo</option><option>Inativo</option></select></div>
       </div>
-      <div><label>Tipo de campanha</label><input id="f-tipo" placeholder="Ex: Tráfego pago"></div>
+      <div class="frow">
+        <div><label>Plataforma</label>
+          <select id="f-plat" onchange="updateInvestFields()">
+            <option>Meta Ads</option><option>Google Ads</option><option>Meta + Google</option><option>Outro</option>
+          </select>
+        </div>
+        <div><label>Tipo de campanha</label><input id="f-tipo" placeholder="Ex: Tráfego pago"></div>
+      </div>
+      <div class="invest-section">
+        <div class="invest-section-title">💰 Investimento diário em tráfego</div>
+        <div id="investInputs"></div>
+      </div>
+      <div class="frow1">
+        <label>Início do ciclo</label>
+        <input id="f-ciclo" type="date">
+      </div>
     </div>
-
-    <!-- CAMPOS DE INVESTIMENTO DINÂMICOS -->
-    <div class="invest-fields" id="investFields">
-      <div class="invest-fields-title">💰 Investimento diário</div>
-      <div id="investInputs"></div>
-    </div>
-
-    <div class="frow1">
-      <label>Início do ciclo</label>
-      <input id="f-ciclo" type="date">
-    </div>
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+    <div class="modal-foot">
       <button class="btn" onclick="closeModal()">Cancelar</button>
-      <button class="btn btn-p" id="btnSalvar" onclick="saveCliente()">Salvar</button>
+      <button class="btn btn-primary" id="btnSalvar" onclick="saveCliente()">Salvar cliente</button>
     </div>
   </div>
 </div>
@@ -310,18 +356,13 @@ const SB_URL='https://hxobanafylacedvoycka.supabase.co';
 const SB_KEY='sb_publishable_wgGesLKU26p4xE-2zt_pHQ_SDFMIVZB';
 const HEADERS={'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':'return=representation'};
 
-let clientes=[];
-let editIdx=-1;
-let currentIdx=-1;
-let dragId=null;
-
+let clientes=[],editIdx=-1,currentIdx=-1,dragId=null;
 const pCls={'Meta Ads':'b-meta','Google Ads':'b-google','Meta + Google':'b-ambos','Outro':'b-outro'};
-const pIcon={'Meta Ads':'f','Google Ads':'G','Meta + Google':'f+G','Outro':'—'};
 
 function status(msg,ok=true){
   const el=document.getElementById('saveStatus');
   el.textContent=msg;
-  el.style.color=ok?'rgba(255,255,255,.5)':'#ffaaaa';
+  el.style.color=ok?'rgba(255,255,255,.45)':'#fca5a5';
   if(ok) setTimeout(()=>el.textContent='',3000);
 }
 
@@ -331,52 +372,48 @@ async function api(method,path,data){
 }
 
 async function loadClientes(){
-  try{
-    const data=await api('get','clientes?order=created_at.asc&select=*');
-    clientes=data||[];
-    renderMain();
-  }catch(e){ document.getElementById('colAtivos').innerHTML=`<div class="no-data">Erro ao carregar.</div>`; }
+  document.getElementById('colAtivos').innerHTML=`<div class="loading"><span class="spinner"></span>Carregando...</div>`;
+  const data=await api('get','clientes?order=created_at.asc&select=*');
+  clientes=data||[];
+  renderMain();
 }
 
 function hoje(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
 function fmtDatetime(iso){ const d=new Date(iso); return d.toLocaleDateString('pt-BR')+' às '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
 function escHtml(t){ return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-function lastOtim(c){
+function lastOtimLabel(c){
   const feed=c.feed||[];
-  if(!feed.length) return '<span style="color:#ccc;font-size:11px">Sem otimizações</span>';
-  const last=feed[feed.length-1];
-  const d=new Date(last.ts);
+  if(!feed.length) return `<span style="color:var(--text3);font-size:11px">Sem registros</span>`;
+  const d=new Date(feed[feed.length-1].ts);
   const diff=Math.round((new Date()-d)/86400000);
-  if(diff===0) return '<span style="font-size:11px;color:#166534;font-weight:600">Hoje</span>';
-  if(diff===1) return '<span style="font-size:11px;color:#888">Ontem</span>';
-  if(diff<=7) return `<span style="font-size:11px;color:#888">${diff}d atrás</span>`;
-  return `<span style="font-size:11px;color:#aaa">${d.toLocaleDateString('pt-BR')}</span>`;
+  if(diff===0) return `<span style="color:var(--success);font-weight:600;font-size:11px">● Hoje</span>`;
+  if(diff===1) return `<span style="color:var(--text2);font-size:11px">Ontem</span>`;
+  if(diff<=7) return `<span style="color:var(--warn);font-size:11px">${diff}d atrás</span>`;
+  return `<span style="color:var(--text3);font-size:11px">${d.toLocaleDateString('pt-BR')}</span>`;
 }
 
-function investLabel(c){
+function investHTML(c){
   const plat=c.plat||'';
-  if(plat==='Meta Ads'&&c.vlr_meta) return `<div class="invest-bar"><span class="invest-dot dot-meta"></span><span class="invest-platform" style="color:#1877f2">Meta</span><span class="invest-val">R$${parseFloat(c.vlr_meta).toLocaleString('pt-BR')}/dia</span></div>`;
-  if(plat==='Google Ads'&&c.vlr_google) return `<div class="invest-bar"><span class="invest-dot dot-google"></span><span class="invest-platform" style="color:#ea4335">Google</span><span class="invest-val">R$${parseFloat(c.vlr_google).toLocaleString('pt-BR')}/dia</span></div>`;
-  if(plat==='Meta + Google'){
-    let html='';
-    if(c.vlr_meta) html+=`<div class="invest-bar"><span class="invest-dot dot-meta"></span><span class="invest-platform" style="color:#1877f2">Meta</span><span class="invest-val">R$${parseFloat(c.vlr_meta).toLocaleString('pt-BR')}/dia</span></div>`;
-    if(c.vlr_google) html+=`<div class="invest-bar"><span class="invest-dot dot-google"></span><span class="invest-platform" style="color:#ea4335">Google</span><span class="invest-val">R$${parseFloat(c.vlr_google).toLocaleString('pt-BR')}/dia</span></div>`;
-    return html||'—';
-  }
-  return c.vlr_outro?`<span style="font-size:12px">R$${parseFloat(c.vlr_outro).toLocaleString('pt-BR')}/dia</span>`:'—';
+  let rows='';
+  if((plat==='Meta Ads'||plat==='Meta + Google')&&c.vlr_meta)
+    rows+=`<div class="invest-row"><span class="invest-dot dot-meta"></span><span class="invest-plat" style="color:var(--meta)">Meta</span><span class="invest-val">R$${parseFloat(c.vlr_meta).toLocaleString('pt-BR')}/dia</span></div>`;
+  if((plat==='Google Ads'||plat==='Meta + Google')&&c.vlr_google)
+    rows+=`<div class="invest-row"><span class="invest-dot dot-google"></span><span class="invest-plat" style="color:var(--google)">Google</span><span class="invest-val">R$${parseFloat(c.vlr_google).toLocaleString('pt-BR')}/dia</span></div>`;
+  if(plat==='Outro'&&c.vlr_outro)
+    rows+=`<div class="invest-row"><span class="invest-val">R$${parseFloat(c.vlr_outro).toLocaleString('pt-BR')}/dia</span></div>`;
+  return rows?`<div class="ccard-invest">${rows}</div>`:'';
 }
 
 function swTab(t){
-  document.querySelectorAll('.main-tab').forEach((el,i)=>el.classList.toggle('active',['clientes','otimizacoes'][i]===t));
-  document.getElementById('page-clientes').classList.toggle('active',t==='clientes');
-  document.getElementById('page-otimizacoes').classList.toggle('active',t==='otimizacoes');
+  document.querySelectorAll('.nav-tab').forEach((el,i)=>el.classList.toggle('active',['clientes','otimizacoes'][i]===t));
+  ['clientes','otimizacoes'].forEach(n=>document.getElementById('page-'+n).classList.toggle('active',n===t));
   document.getElementById('page-cliente').classList.remove('active');
   document.getElementById('btnNovoCliente').style.display=t==='clientes'?'':'none';
   if(t==='otimizacoes') renderAllOtim();
 }
 
-function renderMain(){ renderMetrics(); renderAlerts(); renderKanban(); }
+function renderMain(){ renderMetrics(); renderKanban(); }
 
 function renderMetrics(){
   const ativos=clientes.filter(c=>(c.status||'Ativo')==='Ativo');
@@ -384,15 +421,11 @@ function renderMetrics(){
   const totalMeta=ativos.filter(c=>c.plat==='Meta Ads'||c.plat==='Meta + Google').length;
   const totalGoogle=ativos.filter(c=>c.plat==='Google Ads'||c.plat==='Meta + Google').length;
   document.getElementById('mainMetrics').innerHTML=`
-    <div class="metric"><div class="metric-label">Clientes ativos</div><div class="metric-val" style="color:var(--navy)">${ativos.length}</div></div>
-    <div class="metric"><div class="metric-label">Clientes inativos</div><div class="metric-val" style="color:#64748b">${inativos.length}</div></div>
-    <div class="metric"><div class="metric-label" style="color:#1877f2">Em Meta Ads</div><div class="metric-val" style="color:#1877f2">${totalMeta}</div></div>
-    <div class="metric"><div class="metric-label" style="color:#ea4335">Em Google Ads</div><div class="metric-val" style="color:#ea4335">${totalGoogle}</div></div>
+    <div class="metric"><div class="metric-bar bar-navy"></div><div class="metric-icon">👥</div><div class="metric-label">Clientes ativos</div><div class="metric-val">${ativos.length}</div></div>
+    <div class="metric"><div class="metric-bar bar-gray"></div><div class="metric-icon">⏸</div><div class="metric-label">Clientes inativos</div><div class="metric-val" style="color:#64748b">${inativos.length}</div></div>
+    <div class="metric"><div class="metric-bar bar-meta"></div><div class="metric-icon">📘</div><div class="metric-label">Em Meta Ads</div><div class="metric-val" style="color:var(--meta)">${totalMeta}</div></div>
+    <div class="metric"><div class="metric-bar bar-google"></div><div class="metric-icon">🔍</div><div class="metric-label">Em Google Ads</div><div class="metric-val" style="color:var(--google)">${totalGoogle}</div></div>
   `;
-}
-
-function renderAlerts(){
-  document.getElementById('mainAlerts').innerHTML='';
 }
 
 function renderKanban(){
@@ -401,71 +434,56 @@ function renderKanban(){
   const inativos=clientes.filter(c=>c.status==='Inativo'&&(!q||c.nome.toLowerCase().includes(q)));
   document.getElementById('countAtivos').textContent=ativos.length;
   document.getElementById('countInativos').textContent=inativos.length;
-  document.getElementById('colAtivos').innerHTML=ativos.length?ativos.map(c=>cardHTML(c)).join(''):`<div class="no-data">Nenhum cliente ativo.</div>`;
-  document.getElementById('colInativos').innerHTML=inativos.length?inativos.map(c=>cardHTML(c)).join(''):`<div class="no-data" style="opacity:.5">Arraste clientes inativos aqui.</div>`;
+  document.getElementById('colAtivos').innerHTML=ativos.length?ativos.map(c=>cardHTML(c)).join(''):`<div class="kcol-empty"><div class="kcol-empty-icon">👥</div><div>Nenhum cliente ativo</div></div>`;
+  document.getElementById('colInativos').innerHTML=inativos.length?inativos.map(c=>cardHTML(c)).join(''):`<div class="kcol-empty"><div class="kcol-empty-icon">⏸</div><div>Arraste clientes inativos aqui</div></div>`;
 }
 
 function cardHTML(c){
   const i=clientes.indexOf(c);
-  return `<div class="client-card" draggable="true" id="card-${c.id}"
-    ondragstart="onDragStart(event,'${c.id}')"
-    ondragend="onDragEnd(event)">
-    <div class="card-top">
+  return `<div class="ccard" draggable="true" id="card-${c.id}" ondragstart="onDragStart(event,'${c.id}')" ondragend="onDragEnd(event)">
+    <div class="ccard-top">
       <div>
-        <div class="card-name">${c.nome}</div>
-        <div class="card-tipo">${c.tipo||'—'}</div>
+        <div class="ccard-name">${c.nome}</div>
+        <div class="ccard-tipo">${c.tipo||'—'}</div>
       </div>
     </div>
-    <div class="card-badges">
-      <span class="badge ${pCls[c.plat]||'b-outro'}">${c.plat||'—'}</span>
-    </div>
-    <div>${investLabel(c)}</div>
-    <div style="margin-top:6px;display:flex;align-items:center;justify-content:space-between">
-      <div class="card-otim">Última otim: ${lastOtim(c)}</div>
-    </div>
-    <div class="card-actions">
-      <button class="btn btn-sm btn-p" onclick="event.stopPropagation();openCliente(${i})">Abrir</button>
-      <button class="btn btn-sm" onclick="event.stopPropagation();openModal(${i})">Editar</button>
-      <button class="btn btn-sm btn-danger" onclick="event.stopPropagation();deleteCliente(${i})">Excluir</button>
+    <div class="ccard-plat"><span class="badge ${pCls[c.plat]||'b-outro'}">${c.plat||'—'}</span></div>
+    ${investHTML(c)}
+    <div class="ccard-footer">
+      <div class="otim-label">🕐 ${lastOtimLabel(c)}</div>
+      <div class="ccard-actions">
+        <button class="btn btn-sm btn-primary" onclick="event.stopPropagation();openCliente(${i})">Abrir</button>
+        <button class="btn btn-sm" onclick="event.stopPropagation();openModal(${i})">Editar</button>
+        <button class="btn btn-sm btn-danger" onclick="event.stopPropagation();deleteCliente(${i})">🗑</button>
+      </div>
     </div>
   </div>`;
 }
 
-// DRAG AND DROP
-function onDragStart(e, id){
-  dragId=id;
-  setTimeout(()=>{ const el=document.getElementById('card-'+id); if(el) el.classList.add('dragging'); },0);
-}
-function onDragEnd(e){
-  if(dragId){ const el=document.getElementById('card-'+dragId); if(el) el.classList.remove('dragging'); }
-}
+// DRAG
+function onDragStart(e,id){ dragId=id; setTimeout(()=>{const el=document.getElementById('card-'+id);if(el)el.classList.add('dragging');},0); }
+function onDragEnd(){ if(dragId){const el=document.getElementById('card-'+dragId);if(el)el.classList.remove('dragging');} }
 function onDragOver(e){ e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
-async function onDrop(e, novoStatus){
-  e.preventDefault();
-  e.currentTarget.classList.remove('drag-over');
+function onDragLeave(e){ e.currentTarget.classList.remove('drag-over'); }
+async function onDrop(e,novoStatus){
+  e.preventDefault(); e.currentTarget.classList.remove('drag-over');
   if(!dragId) return;
   const idx=clientes.findIndex(c=>c.id===dragId);
-  if(idx<0) return;
-  if((clientes[idx].status||'Ativo')===novoStatus) return;
+  if(idx<0||(clientes[idx].status||'Ativo')===novoStatus) return;
   clientes[idx].status=novoStatus;
-  renderKanban();
-  renderMetrics();
+  renderKanban(); renderMetrics();
   await api('patch',`clientes?id=eq.${dragId}`,{status:novoStatus});
   status('Status atualizado ✓');
   dragId=null;
 }
-document.querySelectorAll('.kanban-body').forEach(el=>{
-  el.addEventListener('dragleave',()=>el.classList.remove('drag-over'));
-});
 
-// PÁGINA CLIENTE
+// CLIENTE PAGE
 function openCliente(idx){
   currentIdx=idx;
-  document.getElementById('page-clientes').classList.remove('active');
-  document.getElementById('page-otimizacoes').classList.remove('active');
+  ['page-clientes','page-otimizacoes'].forEach(p=>document.getElementById(p).classList.remove('active'));
   document.getElementById('page-cliente').classList.add('active');
   document.getElementById('btnNovoCliente').style.display='none';
-  document.querySelectorAll('.main-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   renderClientePage();
 }
 
@@ -473,98 +491,81 @@ function goMain(){
   document.getElementById('page-cliente').classList.remove('active');
   document.getElementById('page-clientes').classList.add('active');
   document.getElementById('btnNovoCliente').style.display='';
-  document.querySelectorAll('.main-tab').forEach((el,i)=>el.classList.toggle('active',i===0));
-  currentIdx=-1;
-  loadClientes();
+  document.querySelectorAll('.nav-tab').forEach((el,i)=>el.classList.toggle('active',i===0));
+  currentIdx=-1; loadClientes();
 }
 
 function renderClientePage(){
   const c=clientes[currentIdx];
   document.getElementById('ch-nome').textContent=c.nome;
   document.getElementById('ch-meta').innerHTML=`
-    <span class="badge ${pCls[c.plat]||'b-outro'}">${c.plat||'—'}</span>
-    ${c.tipo?`<span style="font-size:12px;color:rgba(255,255,255,.6)">${c.tipo}</span>`:''}
-    <span class="badge" style="background:rgba(255,255,255,.15);color:#fff">${c.status||'Ativo'}</span>
+    <span class="badge ${pCls[c.plat]||'b-outro'}" style="background:rgba(255,255,255,.15);color:#fff">${c.plat||'—'}</span>
+    ${c.tipo?`<span class="ch-tipo">${c.tipo}</span>`:''}
+    <span class="ch-badge">${c.status||'Ativo'}</span>
   `;
   document.getElementById('ch-info').innerHTML=`
-    <div class="info-box"><div class="info-box-label">Plataforma</div><div class="info-box-val">${c.plat||'—'}</div></div>
-    <div class="info-box"><div class="info-box-label">Invest. Meta/dia</div><div class="info-box-val">${c.vlr_meta?'R$'+parseFloat(c.vlr_meta).toLocaleString('pt-BR'):'—'}</div></div>
-    <div class="info-box"><div class="info-box-label">Invest. Google/dia</div><div class="info-box-val">${c.vlr_google?'R$'+parseFloat(c.vlr_google).toLocaleString('pt-BR'):'—'}</div></div>
-    <div class="info-box"><div class="info-box-label">Início ciclo</div><div class="info-box-val">${c.ciclo?new Date(c.ciclo+'T12:00:00').toLocaleDateString('pt-BR'):'—'}</div></div>
+    <div class="ch-info-box"><div class="ch-info-label">Plataforma</div><div class="ch-info-val">${c.plat||'—'}</div></div>
+    <div class="ch-info-box"><div class="ch-info-label">Meta — invest./dia</div><div class="ch-info-val">${c.vlr_meta?'R$'+parseFloat(c.vlr_meta).toLocaleString('pt-BR'):'—'}</div></div>
+    <div class="ch-info-box"><div class="ch-info-label">Google — invest./dia</div><div class="ch-info-val">${c.vlr_google?'R$'+parseFloat(c.vlr_google).toLocaleString('pt-BR'):'—'}</div></div>
+    <div class="ch-info-box"><div class="ch-info-label">Início do ciclo</div><div class="ch-info-val">${c.ciclo?new Date(c.ciclo+'T12:00:00').toLocaleDateString('pt-BR'):'—'}</div></div>
   `;
   renderFeed();
   document.getElementById('notasCliente').value=c.notas||'';
 }
 
 function renderFeed(){
-  const c=clientes[currentIdx];
-  const msgs=c.feed||[];
+  const c=clientes[currentIdx],msgs=c.feed||[];
   const el=document.getElementById('feedMessages');
-  if(!msgs.length){el.innerHTML=`<div class="no-data">Nenhuma otimização registrada.<br>Use o campo abaixo para começar.</div>`;return;}
+  if(!msgs.length){el.innerHTML=`<div class="no-data">📋 Nenhuma otimização registrada ainda.<br><span style="font-size:12px">Use o campo abaixo para começar.</span></div>`;return;}
   el.innerHTML=msgs.slice().reverse().map((m,ri)=>{
     const i=msgs.length-1-ri;
     return `<div class="feed-msg">
-      <div class="feed-msg-date">${fmtDatetime(m.ts)}</div>
+      <div class="feed-msg-date">📅 ${fmtDatetime(m.ts)}</div>
       <div class="feed-msg-text">${escHtml(m.text)}</div>
-      <div class="feed-msg-actions"><button class="btn btn-sm btn-danger" onclick="deleteFeedMsg(${i})">Apagar</button></div>
+      <div class="feed-msg-del"><button class="btn btn-sm btn-danger" onclick="deleteFeedMsg(${i})">Apagar</button></div>
     </div>`;
   }).join('');
 }
 
 async function addFeedMsg(){
-  const inp=document.getElementById('feedInput');
-  const text=inp.value.trim();
+  const inp=document.getElementById('feedInput'),text=inp.value.trim();
   if(!text) return;
   const c=clientes[currentIdx];
   const feed=[...(c.feed||[]),{ts:new Date().toISOString(),text}];
-  inp.value='';
-  status('Salvando...');
+  inp.value=''; status('Salvando...');
   await api('patch',`clientes?id=eq.${c.id}`,{feed});
-  clientes[currentIdx].feed=feed;
-  status('Salvo ✓');
-  renderFeed();
+  clientes[currentIdx].feed=feed; status('Salvo ✓'); renderFeed();
 }
 
 async function deleteFeedMsg(i){
   if(!confirm('Apagar esta otimização?')) return;
-  const c=clientes[currentIdx];
-  const feed=[...(c.feed||[])];
+  const c=clientes[currentIdx],feed=[...(c.feed||[])];
   feed.splice(i,1);
   await api('patch',`clientes?id=eq.${c.id}`,{feed});
-  clientes[currentIdx].feed=feed;
-  status('Removido ✓');
-  renderFeed();
+  clientes[currentIdx].feed=feed; status('Removido ✓'); renderFeed();
 }
 
 async function saveNotasCurrent(){
-  const notas=document.getElementById('notasCliente').value;
-  const c=clientes[currentIdx];
+  const notas=document.getElementById('notasCliente').value,c=clientes[currentIdx];
   await api('patch',`clientes?id=eq.${c.id}`,{notas});
-  clientes[currentIdx].notas=notas;
-  status('Anotações salvas ✓');
+  clientes[currentIdx].notas=notas; status('Anotações salvas ✓');
 }
 
 async function deleteCurrentCliente(){
-  if(!confirm('Excluir '+clientes[currentIdx].nome+'? Esta ação não pode ser desfeita.')) return;
+  if(!confirm('Excluir '+clientes[currentIdx].nome+'? Não pode ser desfeito.')) return;
   const id=clientes[currentIdx].id;
   await api('delete',`clientes?id=eq.${id}`);
-  clientes.splice(currentIdx,1);
-  status('Cliente excluído ✓');
-  goMain();
+  clientes.splice(currentIdx,1); status('Excluído ✓'); goMain();
 }
 
 async function deleteCliente(idx){
   if(!confirm('Excluir '+clientes[idx].nome+'?')) return;
-  const id=clientes[idx].id;
-  await api('delete',`clientes?id=eq.${id}`);
-  clientes.splice(idx,1);
-  status('Excluído ✓');
-  renderMain();
+  await api('delete',`clientes?id=eq.${clientes[idx].id}`);
+  clientes.splice(idx,1); status('Excluído ✓'); renderMain();
 }
 
 function editCurrentCliente(){ openModal(currentIdx); }
 
-// OTIMIZAÇÕES GERAIS
 function renderAllOtim(){
   const all=[];
   clientes.forEach(c=>(c.feed||[]).forEach(m=>all.push({...m,nome:c.nome,plat:c.plat})));
@@ -572,41 +573,27 @@ function renderAllOtim(){
   const el=document.getElementById('allOtimList');
   if(!all.length){el.innerHTML=`<div class="no-data">Nenhuma otimização registrada ainda.</div>`;return;}
   el.innerHTML=all.map(m=>`
-    <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;border-left:3px solid var(--accent)">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-        <span style="font-weight:700;font-size:13px;color:var(--navy)">${m.nome}</span>
+    <div class="otim-card">
+      <div class="otim-card-head">
+        <span class="otim-card-name">${m.nome}</span>
         <span class="badge ${pCls[m.plat]||'b-outro'}">${m.plat||'—'}</span>
-        <span style="font-size:11px;color:#aaa;margin-left:auto">${fmtDatetime(m.ts)}</span>
+        <span class="otim-card-date">📅 ${fmtDatetime(m.ts)}</span>
       </div>
-      <div style="font-size:13px;line-height:1.55;white-space:pre-wrap;color:var(--text)">${escHtml(m.text)}</div>
+      <div class="otim-card-text">${escHtml(m.text)}</div>
     </div>
   `).join('');
 }
 
-// MODAL
 function updateInvestFields(){
   const plat=document.getElementById('f-plat').value;
   let html='';
-  if(plat==='Meta Ads'||plat==='Meta + Google'){
-    html+=`<div style="margin-bottom:10px">
-      <label style="color:#1877f2">● Meta Ads — Valor diário (R$)</label>
-      <input id="f-vlr-meta" type="number" placeholder="Ex: 50" min="0">
-    </div>`;
-  }
-  if(plat==='Google Ads'||plat==='Meta + Google'){
-    html+=`<div style="margin-bottom:4px">
-      <label style="color:#ea4335">● Google Ads — Valor diário (R$)</label>
-      <input id="f-vlr-google" type="number" placeholder="Ex: 30" min="0">
-    </div>`;
-  }
-  if(plat==='Outro'){
-    html+=`<div>
-      <label>Valor diário (R$)</label>
-      <input id="f-vlr-outro" type="number" placeholder="Ex: 100" min="0">
-    </div>`;
-  }
+  if(plat==='Meta Ads'||plat==='Meta + Google')
+    html+=`<div style="margin-bottom:${plat==='Meta + Google'?'12px':'0'}"><label style="color:var(--meta)">📘 Meta Ads — Valor diário (R$)</label><input id="f-vlr-meta" type="number" placeholder="Ex: 50" min="0"></div>`;
+  if(plat==='Google Ads'||plat==='Meta + Google')
+    html+=`<div><label style="color:var(--google)">🔍 Google Ads — Valor diário (R$)</label><input id="f-vlr-google" type="number" placeholder="Ex: 30" min="0"></div>`;
+  if(plat==='Outro')
+    html+=`<div><label>Valor diário (R$)</label><input id="f-vlr-outro" type="number" placeholder="Ex: 100" min="0"></div>`;
   document.getElementById('investInputs').innerHTML=html;
-  // repreenche valores se editando
   if(editIdx>=0){
     const c=clientes[editIdx];
     if(document.getElementById('f-vlr-meta')) document.getElementById('f-vlr-meta').value=c.vlr_meta||'';
@@ -634,11 +621,9 @@ async function saveCliente(){
   if(!nome){alert('Informe o nome do cliente');return;}
   const btn=document.getElementById('btnSalvar');
   btn.disabled=true; btn.textContent='Salvando...';
-  const plat=document.getElementById('f-plat').value;
   const obj={
-    nome,
-    status:document.getElementById('f-status').value,
-    plat,
+    nome, status:document.getElementById('f-status').value,
+    plat:document.getElementById('f-plat').value,
     tipo:document.getElementById('f-tipo').value.trim(),
     ciclo:document.getElementById('f-ciclo').value||null,
     vlr_meta:document.getElementById('f-vlr-meta')?parseFloat(document.getElementById('f-vlr-meta').value)||null:null,
@@ -646,24 +631,15 @@ async function saveCliente(){
     vlr_outro:document.getElementById('f-vlr-outro')?parseFloat(document.getElementById('f-vlr-outro').value)||null:null,
   };
   try{
-    if(editIdx>=0){
-      await api('patch',`clientes?id=eq.${clientes[editIdx].id}`,obj);
-      Object.assign(clientes[editIdx],obj);
-    } else {
-      const res=await api('post','clientes',{...obj,feed:[],historico:[],notas:''});
-      clientes.push(res[0]);
-    }
-    status('Salvo ✓');
-    closeModal();
-    if(currentIdx>=0) renderClientePage();
-    else renderMain();
-  } finally { btn.disabled=false; btn.textContent='Salvar'; }
+    if(editIdx>=0){ await api('patch',`clientes?id=eq.${clientes[editIdx].id}`,obj); Object.assign(clientes[editIdx],obj); }
+    else { const res=await api('post','clientes',{...obj,feed:[],historico:[],notas:''}); clientes.push(res[0]); }
+    status('Salvo ✓'); closeModal();
+    if(currentIdx>=0) renderClientePage(); else renderMain();
+  } finally { btn.disabled=false; btn.textContent='Salvar cliente'; }
 }
 
-document.addEventListener('keydown',e=>{
-  if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&document.activeElement===document.getElementById('feedInput')) addFeedMsg();
-});
-document.getElementById('modalBg').addEventListener('click',e=>{if(e.target===document.getElementById('modalBg'))closeModal();});
+document.addEventListener('keydown',e=>{ if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&document.activeElement===document.getElementById('feedInput')) addFeedMsg(); });
+document.getElementById('modalBg').addEventListener('click',e=>{ if(e.target===document.getElementById('modalBg'))closeModal(); });
 
 loadClientes();
 </script>
