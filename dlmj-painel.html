@@ -392,17 +392,7 @@ function renderMetrics(){
 }
 
 function renderAlerts(){
-  const ativos=clientes.filter(c=>(c.status||'Ativo')==='Ativo');
-  const semOtim=ativos.filter(c=>{
-    const feed=c.feed||[];
-    if(!feed.length) return true;
-    const last=new Date(feed[feed.length-1].ts);
-    return Math.round((new Date()-last)/86400000)>7;
-  });
-  let html='';
-  if(semOtim.length) html+=`<div class="alert-block alert-warn"><div class="alert-title">Sem otimização há mais de 7 dias (${semOtim.length})</div>${semOtim.map(c=>`<div class="alert-item">· ${c.nome}</div>`).join('')}</div>`;
-  if(!html) html=`<div class="alert-block alert-none"><div class="alert-item" style="color:#aaa;text-align:center">Tudo em dia. Nenhum alerta.</div></div>`;
-  document.getElementById('mainAlerts').innerHTML=html;
+  document.getElementById('mainAlerts').innerHTML='';
 }
 
 function renderKanban(){
