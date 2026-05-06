@@ -7,80 +7,56 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
 <style>
 :root{
-  --navy:#0d1f3c;
-  --navy2:#162848;
-  --blue:#1e4080;
-  --accent:#2563b0;
-  --accent-light:#3b82f6;
-  --bg:#f0f3f8;
-  --white:#ffffff;
-  --border:#dde3ef;
-  --border2:#c8d3e8;
-  --text:#0d1f3c;
-  --text2:#5a6a8a;
-  --text3:#8a9ab8;
-  --meta:#1877f2;
-  --meta-bg:#eff5ff;
-  --google:#ea4335;
-  --google-bg:#fff0ee;
-  --both:#7c3aed;
-  --both-bg:#f3eeff;
-  --success:#16a34a;
-  --success-bg:#dcfce7;
-  --warn:#d97706;
-  --warn-bg:#fef3c7;
+  --navy:#0d1f3c;--navy2:#162848;--blue:#1e4080;--accent:#2563b0;--accent-light:#3b82f6;
+  --bg:#f0f3f8;--white:#ffffff;--border:#dde3ef;--border2:#c8d3e8;
+  --text:#0d1f3c;--text2:#5a6a8a;--text3:#8a9ab8;
+  --meta:#1877f2;--meta-bg:#eff5ff;--google:#ea4335;--google-bg:#fff0ee;--both:#7c3aed;--both-bg:#f3eeff;
+  --success:#16a34a;--warn:#d97706;
   --shadow:0 1px 3px rgba(13,31,60,.08),0 4px 16px rgba(13,31,60,.06);
-  --shadow-lg:0 4px 24px rgba(13,31,60,.12),0 1px 4px rgba(13,31,60,.06);
-  --radius:10px;
-  --radius-lg:14px;
+  --shadow-lg:0 4px 24px rgba(13,31,60,.12);
+  --radius:10px;--radius-lg:14px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;-webkit-font-smoothing:antialiased}
 
-/* TOPBAR */
 .topbar{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:0 32px;display:flex;align-items:center;gap:16px;height:56px;position:sticky;top:0;z-index:50;box-shadow:0 2px 16px rgba(13,31,60,.25)}
-.logo-mark{display:flex;align-items:center;gap:10px}
-.logo-text{font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.5px}
-.logo-sub{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;display:block;margin-top:-2px}
+.logo-text{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px}
+.logo-sub{font-size:9px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;display:block;margin-top:-3px}
 .topbar-sep{width:1px;height:24px;background:rgba(255,255,255,.12)}
-.topbar-title{font-size:12px;color:rgba(255,255,255,.5);letter-spacing:.8px;text-transform:uppercase;font-weight:500}
+.topbar-sys{font-size:12px;color:rgba(255,255,255,.5);letter-spacing:.8px;text-transform:uppercase;font-weight:500}
 .topbar-right{margin-left:auto;display:flex;align-items:center;gap:12px}
-.save-pill{font-size:11px;color:rgba(255,255,255,.45);background:rgba(255,255,255,.08);padding:4px 10px;border-radius:20px;transition:all .3s}
+.save-pill{font-size:11px;color:rgba(255,255,255,.45);background:rgba(255,255,255,.08);padding:4px 10px;border-radius:20px}
 .btn-new{background:var(--accent-light);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;gap:6px}
 .btn-new:hover{background:#2d6fd4;transform:translateY(-1px);box-shadow:0 4px 12px rgba(59,130,246,.4)}
 
-/* NAV */
-.nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 32px;display:flex;gap:0}
+.nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 32px;display:flex}
 .nav-tab{padding:14px 20px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--text2);border-bottom:2px solid transparent;font-family:inherit;transition:all .15s;display:flex;align-items:center;gap:7px}
 .nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
-.nav-tab:hover:not(.active){color:var(--text);border-bottom-color:var(--border2)}
-.nav-icon{font-size:15px}
+.nav-tab:hover:not(.active){color:var(--text)}
 
-/* PÁGINAS */
 .page{display:none;padding:28px 32px}.page.active{display:block}
 .container{max-width:1240px;margin:0 auto}
 
-/* MÉTRICAS */
 .mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
 .metric{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}
 .metric:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
-.metric-icon{font-size:22px;margin-bottom:10px}
-.metric-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:6px}
-.metric-val{font-size:28px;font-weight:800;color:var(--text)}
-.metric-bar{position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--radius-lg) var(--radius-lg) 0 0}
+.metric-bar{position:absolute;top:0;left:0;right:0;height:3px}
 .bar-navy{background:linear-gradient(90deg,var(--accent),var(--accent-light))}
 .bar-gray{background:linear-gradient(90deg,#94a3b8,#cbd5e1)}
 .bar-meta{background:linear-gradient(90deg,#1877f2,#42a5f5)}
 .bar-google{background:linear-gradient(90deg,#ea4335,#f97316)}
+.metric-icon{font-size:22px;margin-bottom:10px;margin-top:4px}
+.metric-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:6px}
+.metric-val{font-size:28px;font-weight:800;color:var(--text)}
 
-/* TOOLBAR */
-.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px}
-.search-wrap{position:relative;flex:1;max-width:320px}
-.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text3)}
-.search-input{width:100%;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:9px 12px 9px 36px;font-size:13px;outline:none;font-family:inherit;color:var(--text);transition:border .15s,box-shadow .15s}
+.toolbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;max-width:300px;min-width:180px}
+.search-wrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none}
+.search-input{width:100%;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:9px 12px 9px 34px;font-size:13px;outline:none;font-family:inherit;color:var(--text);transition:border .15s,box-shadow .15s}
 .search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,176,.1)}
+.plat-filter{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:9px 14px;font-size:13px;color:var(--text);outline:none;font-family:inherit;cursor:pointer;min-width:200px;transition:border .15s}
+.plat-filter:focus{border-color:var(--accent)}
 
-/* KANBAN */
 .kanban{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .kcol{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)}
 .kcol-head{padding:16px 20px;display:flex;align-items:center;gap:10px}
@@ -90,101 +66,88 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .kcol-badge{background:rgba(255,255,255,.2);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px}
 .kcol-body{background:var(--white);min-height:420px;padding:14px;display:flex;flex-direction:column;gap:10px;border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius-lg) var(--radius-lg);transition:background .15s}
 .kcol-body.drag-over{background:#eef4ff;border-color:var(--accent)}
-.kcol-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;min-height:200px;color:var(--text3);font-size:13px;gap:8px;padding:40px}
-.kcol-empty-icon{font-size:32px;opacity:.4}
+.kcol-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;min-height:200px;color:var(--text3);font-size:13px;gap:8px;padding:40px;text-align:center}
+.kcol-empty-icon{font-size:32px;opacity:.35}
 
-/* CARDS */
-.ccard{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;cursor:grab;transition:all .18s;box-shadow:0 1px 3px rgba(13,31,60,.06)}
+.ccard{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:15px 16px;cursor:grab;transition:all .18s;box-shadow:0 1px 3px rgba(13,31,60,.06);active:cursor:grabbing}
 .ccard:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(37,99,176,.12);transform:translateY(-1px)}
-.ccard.dragging{opacity:.35;transform:scale(.97);box-shadow:none}
-.ccard-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
-.ccard-name{font-weight:700;font-size:14px;color:var(--text);line-height:1.3}
+.ccard.dragging{opacity:.35;transform:scale(.97);box-shadow:none;cursor:grabbing}
+.ccard-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}
+.ccard-name{font-weight:700;font-size:14px;color:var(--text);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ccard-tipo{font-size:11px;color:var(--text3);margin-top:2px;font-weight:500}
-.ccard-plat{margin-bottom:10px}
 .ccard-invest{background:var(--bg);border-radius:7px;padding:8px 10px;margin-bottom:10px}
 .invest-row{display:flex;align-items:center;gap:8px;font-size:12px}
 .invest-row+.invest-row{margin-top:4px}
 .invest-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.dot-meta{background:var(--meta)}
-.dot-google{background:var(--google)}
-.invest-plat{font-weight:600;width:55px;color:var(--text2)}
-.invest-val{font-weight:700;color:var(--text)}
-.ccard-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border)}
-.otim-label{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
-.ccard-actions{display:flex;gap:6px}
+.dot-meta{background:var(--meta)}.dot-google{background:var(--google)}
+.invest-plat{font-weight:600;width:52px;font-size:11px}
+.invest-val{font-weight:700;color:var(--text);font-size:13px}
+.ccard-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);gap:8px}
+.otim-tag{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
+.ccard-btns{display:flex;gap:5px;flex-shrink:0}
 
-/* BADGES */
-.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:600;letter-spacing:.2px}
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:600;letter-spacing:.2px;flex-shrink:0}
 .b-meta{background:var(--meta-bg);color:var(--meta)}
 .b-google{background:var(--google-bg);color:var(--google)}
 .b-ambos{background:var(--both-bg);color:var(--both)}
 .b-outro{background:#f1f5f9;color:#475569}
 
-/* BOTÕES */
 .btn{padding:7px 14px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--text);font-family:inherit;transition:all .15s}
 .btn:hover{background:var(--bg)}
-.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-.btn-primary:hover{background:var(--blue)}
-.btn-danger{color:#dc2626;border-color:#fecaca;background:#fff}.btn-danger:hover{background:#fef2f2}
-.btn-ghost{background:transparent;border:none;color:var(--text2);padding:5px 8px;font-size:12px}.btn-ghost:hover{color:var(--text);background:var(--bg)}
-.btn-sm{padding:4px 10px;font-size:11px;border-radius:6px}
-.btn-icon{width:30px;height:30px;padding:0;display:flex;align-items:center;justify-content:center;font-size:14px}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}.btn-primary:hover{background:var(--blue)}
+.btn-danger{color:#dc2626;border-color:#fecaca}.btn-danger:hover{background:#fef2f2}
+.btn-sm{padding:5px 11px;font-size:11px;border-radius:6px}
+.btn-icon{padding:5px 8px;font-size:13px}
 
-/* PÁGINA CLIENTE */
 .back-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);cursor:pointer;margin-bottom:22px;padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:var(--white);font-weight:500;transition:all .15s}
 .back-btn:hover{color:var(--accent);border-color:var(--accent)}
+
 .ch-hero{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:24px;box-shadow:var(--shadow-lg)}
 .ch-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
 .ch-name{font-size:24px;font-weight:800;color:#fff;margin-bottom:6px}
-.ch-meta{display:flex;gap:8px;align-items:center}
-.ch-badge{background:rgba(255,255,255,.15);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:5px;backdrop-filter:blur(4px)}
-.ch-tipo{font-size:12px;color:rgba(255,255,255,.55);font-weight:500}
-.ch-infos{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.ch-info-box{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);border-radius:9px;padding:14px;backdrop-filter:blur(4px)}
+.ch-meta-row{display:flex;gap:8px;align-items:center}
+.ch-badge{background:rgba(255,255,255,.15);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:5px}
+.ch-tipo{font-size:12px;color:rgba(255,255,255,.55)}
+.ch-infos{display:grid;gap:12px}
+.ch-info-box{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);border-radius:9px;padding:14px}
 .ch-info-label{font-size:10px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:5px}
 .ch-info-val{font-size:16px;font-weight:700;color:#fff}
 
-/* DUAS COLUNAS */
 .two-col{display:grid;grid-template-columns:3fr 2fr;gap:20px}
 .panel{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)}
 .panel-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;background:#fafbfd}
 .panel-title{font-size:13px;font-weight:700;color:var(--text);flex:1}
-.panel-icon{font-size:16px}
+.panel-hint{font-size:11px;color:var(--text3)}
 
-/* FEED */
 .feed-body{height:440px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
 .feed-body::-webkit-scrollbar{width:4px}
-.feed-body::-webkit-scrollbar-track{background:transparent}
 .feed-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
-.feed-msg{background:#f8faff;border:1px solid var(--border);border-radius:9px;padding:12px 14px;border-left:3px solid var(--accent);transition:all .15s}
+.feed-msg{background:#f8faff;border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:9px;padding:12px 14px;transition:all .15s}
 .feed-msg:hover{border-color:var(--accent);box-shadow:0 2px 8px rgba(37,99,176,.08)}
-.feed-msg-date{font-size:11px;color:var(--text3);font-weight:600;margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.feed-msg-date{font-size:11px;color:var(--text3);font-weight:600;margin-bottom:5px}
 .feed-msg-text{font-size:13px;line-height:1.6;white-space:pre-wrap;color:var(--text)}
-.feed-msg-del{opacity:0;transition:opacity .15s;margin-top:6px}
+.feed-msg-del{opacity:0;margin-top:6px;transition:opacity .15s}
 .feed-msg:hover .feed-msg-del{opacity:1}
 .feed-foot{padding:14px 16px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:flex-end;background:#fafbfd}
 .feed-ta{flex:1;font-family:inherit;font-size:13px;color:var(--text);background:var(--white);border:1px solid var(--border);border-radius:8px;padding:10px 12px;outline:none;resize:none;line-height:1.55;transition:border .15s}
 .feed-ta:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,176,.08)}
 
-/* NOTAS */
 .notas-body{padding:16px}
 .notas-ta{width:100%;font-family:inherit;font-size:13px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;outline:none;resize:none;line-height:1.6;min-height:200px;transition:border .15s}
 .notas-ta:focus{border-color:var(--accent);background:var(--white);box-shadow:0 0 0 3px rgba(37,99,176,.08)}
 
-/* OTIMIZAÇÕES GLOBAIS */
-.otim-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px;border-left:3px solid var(--accent);box-shadow:0 1px 3px rgba(13,31,60,.05);transition:box-shadow .15s}
+.otim-card{background:var(--white);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--radius);padding:16px;margin-bottom:10px;box-shadow:0 1px 3px rgba(13,31,60,.05)}
 .otim-card:hover{box-shadow:var(--shadow)}
-.otim-card-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.otim-card-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
 .otim-card-name{font-weight:700;font-size:13px;color:var(--text);flex:1}
-.otim-card-date{font-size:11px;color:var(--text3);font-weight:500}
+.otim-card-date{font-size:11px;color:var(--text3)}
 .otim-card-text{font-size:13px;line-height:1.6;white-space:pre-wrap;color:var(--text2)}
 
-/* MODAL */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(10,20,50,.55);z-index:100;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
 .modal-bg.open{display:flex}
-.modal{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);padding:0;width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(13,31,60,.2)}
+.modal{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(13,31,60,.2)}
 .modal-head{padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
-.modal-head-icon{width:36px;height:36px;background:var(--navy);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.modal-icon{width:36px;height:36px;background:var(--navy);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .modal-head h3{font-size:16px;font-weight:700;color:var(--text)}
 .modal-body{padding:22px 24px}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
@@ -192,52 +155,48 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 label{font-size:12px;color:var(--text2);display:block;margin-bottom:5px;font-weight:600;letter-spacing:.2px}
 input,select,textarea{font-family:inherit;font-size:13px;color:var(--text);background:#f8faff;border:1px solid var(--border);border-radius:7px;padding:9px 11px;outline:none;width:100%;transition:all .15s}
 input:focus,select:focus,textarea:focus{border-color:var(--accent);background:var(--white);box-shadow:0 0 0 3px rgba(37,99,176,.08)}
-textarea{resize:vertical}
 .invest-section{background:linear-gradient(135deg,#f0f6ff,#f8f4ff);border:1px solid #d0e0f8;border-radius:10px;padding:16px;margin-bottom:16px}
-.invest-section-title{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:6px}
+.invest-section-title{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
 .modal-foot{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;background:#fafbfd;border-radius:0 0 var(--radius-lg) var(--radius-lg)}
 
 .no-data{text-align:center;color:var(--text3);padding:40px;font-size:13px}
 .loading{text-align:center;color:var(--text3);padding:56px;font-size:13px}
-.spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <div class="logo-mark">
-    <div>
-      <div class="logo-text">DLMJ</div>
-      <span class="logo-sub">Assessoria</span>
-    </div>
+  <div>
+    <div class="logo-text">DLMJ</div>
+    <span class="logo-sub">Assessoria</span>
   </div>
   <div class="topbar-sep"></div>
-  <div class="topbar-title">Sistema de Organização</div>
+  <div class="topbar-sys">Sistema de Organização</div>
   <div class="topbar-right">
     <span class="save-pill" id="saveStatus"></span>
     <button class="btn-new" onclick="openModal()" id="btnNovoCliente">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v11M1 6.5h11" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
       Novo cliente
     </button>
   </div>
 </div>
 
 <div class="nav">
-  <button class="nav-tab active" onclick="swTab('clientes')"><span class="nav-icon">👥</span>Clientes</button>
-  <button class="nav-tab" onclick="swTab('otimizacoes')"><span class="nav-icon">📋</span>Otimizações</button>
+  <button class="nav-tab active" onclick="swTab('clientes')">👥 Clientes</button>
+  <button class="nav-tab" onclick="swTab('otimizacoes')">📋 Otimizações</button>
 </div>
 
-<!-- CLIENTES -->
 <div class="page active" id="page-clientes">
   <div class="container">
     <div class="mgrid" id="mainMetrics"></div>
     <div class="toolbar">
       <div class="search-wrap">
-        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 10l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         <input class="search-input" type="text" id="searchInput" placeholder="Buscar cliente..." oninput="renderKanban()">
       </div>
-      <select id="filtroPlat" onchange="renderKanban()" style="background:var(--white);border:1px solid var(--border);border-radius:8px;padding:9px 14px;font-size:13px;color:var(--text);outline:none;font-family:inherit;cursor:pointer;min-width:200px">
+      <select class="plat-filter" id="filtroPlat" onchange="renderKanban()">
         <option value="">Todas as plataformas</option>
         <option value="Meta Ads">Meta Ads</option>
         <option value="Google Ads">Google Ads</option>
@@ -264,18 +223,16 @@ textarea{resize:vertical}
   </div>
 </div>
 
-<!-- OTIMIZAÇÕES -->
 <div class="page" id="page-otimizacoes">
   <div class="container">
     <div style="margin-bottom:20px">
-      <div style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px">Todas as Otimizações</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:4px">Todas as Otimizações</div>
       <div style="font-size:13px;color:var(--text2)">Histórico completo em ordem cronológica.</div>
     </div>
     <div id="allOtimList"></div>
   </div>
 </div>
 
-<!-- CLIENTE -->
 <div class="page" id="page-cliente">
   <div class="container">
     <button class="back-btn" onclick="goMain()">
@@ -286,11 +243,11 @@ textarea{resize:vertical}
       <div class="ch-top">
         <div>
           <div class="ch-name" id="ch-nome"></div>
-          <div class="ch-meta" id="ch-meta"></div>
+          <div class="ch-meta-row" id="ch-meta"></div>
         </div>
         <div style="display:flex;gap:8px">
           <button class="btn" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff;font-size:12px" onclick="editCurrentCliente()">✏️ Editar</button>
-          <button class="btn btn-danger" style="background:rgba(220,38,38,.15);border-color:rgba(220,38,38,.3);color:#fca5a5;font-size:12px" onclick="deleteCurrentCliente()">🗑 Excluir</button>
+          <button class="btn" style="background:rgba(220,38,38,.15);border-color:rgba(220,38,38,.3);color:#fca5a5;font-size:12px" onclick="deleteCurrentCliente()">🗑 Excluir</button>
         </div>
       </div>
       <div class="ch-infos" id="ch-info"></div>
@@ -298,9 +255,9 @@ textarea{resize:vertical}
     <div class="two-col">
       <div class="panel">
         <div class="panel-head">
-          <span class="panel-icon">📋</span>
+          <span style="font-size:16px">📋</span>
           <span class="panel-title">Otimizações</span>
-          <span style="font-size:11px;color:var(--text3)">Ctrl+Enter para enviar</span>
+          <span class="panel-hint">Ctrl+Enter para enviar</span>
         </div>
         <div class="feed-body" id="feedMessages"></div>
         <div class="feed-foot">
@@ -310,11 +267,11 @@ textarea{resize:vertical}
       </div>
       <div class="panel">
         <div class="panel-head">
-          <span class="panel-icon">📝</span>
+          <span style="font-size:16px">📝</span>
           <span class="panel-title">Anotações</span>
         </div>
         <div class="notas-body">
-          <textarea class="notas-ta" id="notasCliente" placeholder="Observações, contrato, detalhes do cliente..."></textarea>
+          <textarea class="notas-ta" id="notasCliente" placeholder="Observações, contrato, detalhes..."></textarea>
           <button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="saveNotasCurrent()">Salvar anotações</button>
         </div>
       </div>
@@ -322,21 +279,24 @@ textarea{resize:vertical}
   </div>
 </div>
 
-<!-- MODAL -->
 <div class="modal-bg" id="modalBg">
   <div class="modal">
     <div class="modal-head">
-      <div class="modal-head-icon">👤</div>
+      <div class="modal-icon">👤</div>
       <h3 id="modalTitle">Novo cliente</h3>
     </div>
     <div class="modal-body">
       <div class="frow1">
-        <label>Nome da empresa *</label><input id="f-nome" type="text" placeholder="Ex: Auto Prime Veículos">
+        <label>Nome da empresa *</label>
+        <input id="f-nome" type="text" placeholder="Ex: Auto Prime Veículos">
       </div>
       <div class="frow">
         <div><label>Plataforma</label>
           <select id="f-plat" onchange="updateInvestFields()">
-            <option>Meta Ads</option><option>Google Ads</option><option>Meta + Google</option><option>Outro</option>
+            <option>Meta Ads</option>
+            <option>Google Ads</option>
+            <option>Meta + Google</option>
+            <option>Outro</option>
           </select>
         </div>
         <div><label>Tipo de campanha</label><input id="f-tipo" placeholder="Ex: Tráfego pago"></div>
@@ -358,571 +318,349 @@ textarea{resize:vertical}
 </div>
 
 <script>
-const SB_URL='https://hxobanafylacedvoycka.supabase.co';
-const SB_KEY='sb_publishable_wgGesLKU26p4xE-2zt_pHQ_SDFMIVZB';
-const HEADERS={'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':'return=representation'};
+const SB_URL = 'https://hxobanafylacedvoycka.supabase.co';
+const SB_KEY = 'sb_publishable_wgGesLKU26p4xE-2zt_pHQ_SDFMIVZB';
+const HEADERS = {
+  'apikey': SB_KEY,
+  'Authorization': 'Bearer ' + SB_KEY,
+  'Content-Type': 'application/json',
+  'Prefer': 'return=representation'
+};
 
-let clientes=[],editIdx=-1,currentIdx=-1,dragId=null;
-const pCls={'Meta Ads':'b-meta','Google Ads':'b-google','Meta + Google':'b-ambos','Outro':'b-outro'};
+let clientes = [], editIdx = -1, currentIdx = -1, dragId = null;
 
-function status(msg,ok=true){
-  const el=document.getElementById('saveStatus');
-  el.textContent=msg;
-  el.style.color=ok?'rgba(255,255,255,.45)':'#fca5a5';
-  if(ok) setTimeout(()=>el.textContent='',3000);
+const pCls = {
+  'Meta Ads': 'b-meta',
+  'Google Ads': 'b-google',
+  'Meta + Google': 'b-ambos',
+  'Outro': 'b-outro'
+};
+
+function status(msg, ok) {
+  if (ok === undefined) ok = true;
+  var el = document.getElementById('saveStatus');
+  el.textContent = msg;
+  el.style.color = ok ? 'rgba(255,255,255,.45)' : '#fca5a5';
+  if (ok) setTimeout(function(){ el.textContent = ''; }, 3000);
 }
 
-async function api(method,path,data){
-  try{ const r=await axios({method,url:SB_URL+'/rest/v1/'+path,headers:HEADERS,data}); return r.data; }
-  catch(e){ status('Erro: '+e.message,false); throw e; }
+async function api(method, path, data) {
+  try {
+    var r = await axios({ method: method, url: SB_URL + '/rest/v1/' + path, headers: HEADERS, data: data });
+    return r.data;
+  } catch(e) {
+    status('Erro: ' + e.message, false);
+    throw e;
+  }
 }
 
-async function loadClientes(){
-  document.getElementById('colAtivos').innerHTML=`<div class="loading"><span class="spinner"></span>Carregando...</div>`;
-  const data=await api('get','clientes?order=created_at.asc&select=*');
-  clientes=data||[];
+async function loadClientes() {
+  document.getElementById('colAtivos').innerHTML = '<div class="loading"><span class="spinner"></span>Carregando...</div>';
+  var data = await api('get', 'clientes?order=created_at.asc&select=*');
+  clientes = data || [];
   renderMain();
 }
 
-function hoje(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
-function fmtDatetime(iso){ const d=new Date(iso); return d.toLocaleDateString('pt-BR')+' às '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
-function escHtml(t){ return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function hoje() { var d = new Date(); d.setHours(0,0,0,0); return d; }
 
-function lastOtimLabel(c){
-  const feed=c.feed||[];
-  if(!feed.length) return `<span style="color:var(--text3);font-size:11px">Sem registros</span>`;
-  const d=new Date(feed[feed.length-1].ts);
-  const diff=Math.round((new Date()-d)/86400000);
-  if(diff===0) return `<span style="color:var(--success);font-weight:600;font-size:11px">● Hoje</span>`;
-  if(diff===1) return `<span style="color:var(--text2);font-size:11px">Ontem</span>`;
-  if(diff<=7) return `<span style="color:var(--warn);font-size:11px">${diff}d atrás</span>`;
-  return `<span style="color:var(--text3);font-size:11px">${d.toLocaleDateString('pt-BR')}</span>`;
+function fmtDatetime(iso) {
+  var d = new Date(iso);
+  return d.toLocaleDateString('pt-BR') + ' às ' + d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
 }
 
-function investHTML(c){
-  const plat=c.plat||'';
-  let rows='';
-  if((plat==='Meta Ads'||plat==='Meta + Google')&&c.vlr_meta)
-    rows+=`<div class="invest-row"><span class="invest-dot dot-meta"></span><span class="invest-plat" style="color:var(--meta)">Meta</span><span class="invest-val">R$${parseFloat(c.vlr_meta).toLocaleString('pt-BR')}/dia</span></div>`;
-  if((plat==='Google Ads'||plat==='Meta + Google')&&c.vlr_google)
-    rows+=`<div class="invest-row"><span class="invest-dot dot-google"></span><span class="invest-plat" style="color:var(--google)">Google</span><span class="invest-val">R$${parseFloat(c.vlr_google).toLocaleString('pt-BR')}/dia</span></div>`;
-  if(plat==='Outro'&&c.vlr_outro)
-    rows+=`<div class="invest-row"><span class="invest-val">R$${parseFloat(c.vlr_outro).toLocaleString('pt-BR')}/dia</span></div>`;
-  return rows?`<div class="ccard-invest">${rows}</div>`:'';
+function escHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-function swTab(t){
-  document.querySelectorAll('.nav-tab').forEach((el,i)=>el.classList.toggle('active',['clientes','otimizacoes'][i]===t));
-  ['clientes','otimizacoes'].forEach(n=>document.getElementById('page-'+n).classList.toggle('active',n===t));
+function lastOtimLabel(c) {
+  var feed = c.feed || [];
+  if (!feed.length) return '<span style="color:var(--text3);font-size:11px">Sem registros</span>';
+  var d = new Date(feed[feed.length - 1].ts);
+  var diff = Math.round((new Date() - d) / 86400000);
+  if (diff === 0) return '<span style="color:var(--success);font-weight:600;font-size:11px">● Hoje</span>';
+  if (diff === 1) return '<span style="color:var(--text2);font-size:11px">Ontem</span>';
+  if (diff <= 7) return '<span style="color:var(--warn);font-size:11px">' + diff + 'd atrás</span>';
+  return '<span style="color:var(--text3);font-size:11px">' + d.toLocaleDateString('pt-BR') + '</span>';
+}
+
+function investHTML(c) {
+  var plat = c.plat || '';
+  var rows = '';
+  if ((plat === 'Meta Ads' || plat === 'Meta + Google') && c.vlr_meta)
+    rows += '<div class="invest-row"><span class="invest-dot dot-meta"></span><span class="invest-plat" style="color:var(--meta)">Meta</span><span class="invest-val">R$' + parseFloat(c.vlr_meta).toLocaleString('pt-BR') + '/dia</span></div>';
+  if ((plat === 'Google Ads' || plat === 'Meta + Google') && c.vlr_google)
+    rows += '<div class="invest-row"><span class="invest-dot dot-google"></span><span class="invest-plat" style="color:var(--google)">Google</span><span class="invest-val">R$' + parseFloat(c.vlr_google).toLocaleString('pt-BR') + '/dia</span></div>';
+  if (plat === 'Outro' && c.vlr_outro)
+    rows += '<div class="invest-row"><span class="invest-val">R$' + parseFloat(c.vlr_outro).toLocaleString('pt-BR') + '/dia</span></div>';
+  return rows ? '<div class="ccard-invest">' + rows + '</div>' : '';
+}
+
+function swTab(t) {
+  document.querySelectorAll('.nav-tab').forEach(function(el, i) {
+    el.classList.toggle('active', ['clientes','otimizacoes'][i] === t);
+  });
+  ['clientes','otimizacoes'].forEach(function(n) {
+    document.getElementById('page-' + n).classList.toggle('active', n === t);
+  });
   document.getElementById('page-cliente').classList.remove('active');
-  document.getElementById('btnNovoCliente').style.display=t==='clientes'?'':'none';
-  if(t==='otimizacoes') renderAllOtim();
+  document.getElementById('btnNovoCliente').style.display = t === 'clientes' ? '' : 'none';
+  if (t === 'otimizacoes') renderAllOtim();
 }
 
-function renderMain(){ renderMetrics(); renderKanban(); }
+function renderMain() { renderMetrics(); renderKanban(); }
 
-function renderMetrics(){
-  const ativos=clientes.filter(c=>(c.status||'Ativo')==='Ativo');
-  const inativos=clientes.filter(c=>c.status==='Inativo');
-  const totalMeta=ativos.filter(c=>c.plat==='Meta Ads'||c.plat==='Meta + Google').length;
-  const totalGoogle=ativos.filter(c=>c.plat==='Google Ads'||c.plat==='Meta + Google').length;
-  document.getElementById('mainMetrics').innerHTML=`
-    <div class="metric"><div class="metric-bar bar-navy"></div><div class="metric-icon">👥</div><div class="metric-label">Clientes ativos</div><div class="metric-val">${ativos.length}</div></div>
-    <div class="metric"><div class="metric-bar bar-gray"></div><div class="metric-icon">⏸</div><div class="metric-label">Clientes inativos</div><div class="metric-val" style="color:#64748b">${inativos.length}</div></div>
-    <div class="metric"><div class="metric-bar bar-meta"></div><div class="metric-icon">📘</div><div class="metric-label">Em Meta Ads</div><div class="metric-val" style="color:var(--meta)">${totalMeta}</div></div>
-    <div class="metric"><div class="metric-bar bar-google"></div><div class="metric-icon">🔍</div><div class="metric-label">Em Google Ads</div><div class="metric-val" style="color:var(--google)">${totalGoogle}</div></div>
-  `;
+function renderMetrics() {
+  var ativos = clientes.filter(function(c){ return (c.status || 'Ativo') === 'Ativo'; });
+  var inativos = clientes.filter(function(c){ return c.status === 'Inativo'; });
+  var totalMeta = ativos.filter(function(c){ return c.plat === 'Meta Ads' || c.plat === 'Meta + Google'; }).length;
+  var totalGoogle = ativos.filter(function(c){ return c.plat === 'Google Ads' || c.plat === 'Meta + Google'; }).length;
+  document.getElementById('mainMetrics').innerHTML =
+    '<div class="metric"><div class="metric-bar bar-navy"></div><div class="metric-icon">👥</div><div class="metric-label">Clientes ativos</div><div class="metric-val">' + ativos.length + '</div></div>' +
+    '<div class="metric"><div class="metric-bar bar-gray"></div><div class="metric-icon">⏸</div><div class="metric-label">Clientes inativos</div><div class="metric-val" style="color:#64748b">' + inativos.length + '</div></div>' +
+    '<div class="metric"><div class="metric-bar bar-meta"></div><div class="metric-icon">📘</div><div class="metric-label">Em Meta Ads</div><div class="metric-val" style="color:var(--meta)">' + totalMeta + '</div></div>' +
+    '<div class="metric"><div class="metric-bar bar-google"></div><div class="metric-icon">🔍</div><div class="metric-label">Em Google Ads</div><div class="metric-val" style="color:var(--google)">' + totalGoogle + '</div></div>';
 }
 
-function renderKanban(){
-  const q=(document.getElementById('searchInput')?.value||'').toLowerCase();
-  const fp=document.getElementById('filtroPlat')?.value||'';
-  const ativos=clientes.filter(c=>(c.status||'Ativo')==='Ativo'&&(!q||c.nome.toLowerCase().includes(q))&&(!fp||c.plat===fp));
-  const inativos=clientes.filter(c=>c.status==='Inativo'&&(!q||c.nome.toLowerCase().includes(q))&&(!fp||c.plat===fp));
-  document.getElementById('countAtivos').textContent=ativos.length;
-  document.getElementById('countInativos').textContent=inativos.length;
-  document.getElementById('colAtivos').innerHTML=ativos.length?ativos.map(c=>cardHTML(c)).join(''):`<div class="kcol-empty"><div class="kcol-empty-icon">👥</div><div>Nenhum cliente ativo</div></div>`;
-  document.getElementById('colInativos').innerHTML=inativos.length?inativos.map(c=>cardHTML(c)).join(''):`<div class="kcol-empty"><div class="kcol-empty-icon">⏸</div><div>Arraste clientes inativos aqui</div></div>`;
+function renderKanban() {
+  var q = (document.getElementById('searchInput') ? document.getElementById('searchInput').value : '').toLowerCase();
+  var fp = document.getElementById('filtroPlat') ? document.getElementById('filtroPlat').value : '';
+  var ativos = clientes.filter(function(c){ return (c.status||'Ativo')==='Ativo' && (!q||c.nome.toLowerCase().includes(q)) && (!fp||c.plat===fp); });
+  var inativos = clientes.filter(function(c){ return c.status==='Inativo' && (!q||c.nome.toLowerCase().includes(q)) && (!fp||c.plat===fp); });
+  document.getElementById('countAtivos').textContent = ativos.length;
+  document.getElementById('countInativos').textContent = inativos.length;
+  document.getElementById('colAtivos').innerHTML = ativos.length ? ativos.map(cardHTML).join('') : '<div class="kcol-empty"><div class="kcol-empty-icon">👥</div><div>Nenhum cliente ativo</div></div>';
+  document.getElementById('colInativos').innerHTML = inativos.length ? inativos.map(cardHTML).join('') : '<div class="kcol-empty"><div class="kcol-empty-icon">⏸</div><div>Arraste clientes inativos aqui</div></div>';
 }
 
-function cardHTML(c){
-  const i=clientes.indexOf(c);
-  const platCls=pCls[c.plat]||'b-outro';
-  return `<div class="ccard" draggable="true" id="card-${c.id}" ondragstart="onDragStart(event,'${c.id}')" ondragend="onDragEnd(event)">
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px">
-      <div style="flex:1;min-width:0">
-        <div class="ccard-name" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.nome}</div>
-        <div class="ccard-tipo">${c.tipo||'—'}</div>
-      </div>
-      <span class="badge ${platCls}" style="flex-shrink:0;margin-top:2px">${c.plat||'—'}</span>
-    </div>
-    ${investHTML(c)}
-    <div style="display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);gap:8px">
-      <div class="otim-label" style="font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px">🕐 ${lastOtimLabel(c)}</div>
-      <div style="display:flex;gap:5px;flex-shrink:0">
-        <button class="btn btn-sm btn-primary" onclick="event.stopPropagation();openCliente(${i})" style="padding:5px 12px">Abrir</button>
-        <button class="btn btn-sm" onclick="event.stopPropagation();openModal(${i})" style="padding:5px 10px">✏️</button>
-        <button class="btn btn-sm btn-danger" onclick="event.stopPropagation();deleteCliente(${i})" style="padding:5px 10px">🗑</button>
-      </div>
-    </div>
-  </div>`;
+function cardHTML(c) {
+  var i = clientes.indexOf(c);
+  var cls = pCls[c.plat] || 'b-outro';
+  return '<div class="ccard" draggable="true" id="card-' + c.id + '" ondragstart="onDragStart(event,\'' + c.id + '\')" ondragend="onDragEnd()">' +
+    '<div class="ccard-header">' +
+      '<div style="flex:1;min-width:0">' +
+        '<div class="ccard-name">' + c.nome + '</div>' +
+        '<div class="ccard-tipo">' + (c.tipo || '—') + '</div>' +
+      '</div>' +
+      '<span class="badge ' + cls + '">' + (c.plat || '—') + '</span>' +
+    '</div>' +
+    investHTML(c) +
+    '<div class="ccard-footer">' +
+      '<div class="otim-tag">🕐 ' + lastOtimLabel(c) + '</div>' +
+      '<div class="ccard-btns">' +
+        '<button class="btn btn-sm btn-primary" onclick="event.stopPropagation();openCliente(' + i + ')">Abrir</button>' +
+        '<button class="btn btn-sm btn-icon" onclick="event.stopPropagation();openModal(' + i + ')" title="Editar">✏️</button>' +
+        '<button class="btn btn-sm btn-icon btn-danger" onclick="event.stopPropagation();deleteCliente(' + i + ')" title="Excluir">🗑</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
 }
 
-// DRAG
-function onDragStart(e,id){ dragId=id; setTimeout(()=>{const el=document.getElementById('card-'+id);if(el)el.classList.add('dragging');},0); }
-function onDragEnd(){ if(dragId){const el=document.getElementById('card-'+dragId);if(el)el.classList.remove('dragging');} }
-function onDragOver(e){ e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
-function onDragLeave(e){ e.currentTarget.classList.remove('drag-over'); }
-async function onDrop(e,novoStatus){
+function onDragStart(e, id) {
+  dragId = id;
+  setTimeout(function(){ var el = document.getElementById('card-' + id); if (el) el.classList.add('dragging'); }, 0);
+}
+function onDragEnd() {
+  if (dragId) { var el = document.getElementById('card-' + dragId); if (el) el.classList.remove('dragging'); }
+}
+function onDragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+function onDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+async function onDrop(e, novoStatus) {
   e.preventDefault(); e.currentTarget.classList.remove('drag-over');
-  if(!dragId) return;
-  const idx=clientes.findIndex(c=>c.id===dragId);
-  if(idx<0||(clientes[idx].status||'Ativo')===novoStatus) return;
-  clientes[idx].status=novoStatus;
+  if (!dragId) return;
+  var idx = clientes.findIndex(function(c){ return c.id === dragId; });
+  if (idx < 0 || (clientes[idx].status || 'Ativo') === novoStatus) { dragId = null; return; }
+  clientes[idx].status = novoStatus;
   renderKanban(); renderMetrics();
-  await api('patch',`clientes?id=eq.${dragId}`,{status:novoStatus});
+  await api('patch', 'clientes?id=eq.' + dragId, { status: novoStatus });
   status('Status atualizado ✓');
-  dragId=null;
+  dragId = null;
 }
 
-// CLIENTE PAGE
-function openCliente(idx){
-  currentIdx=idx;
-  ['page-clientes','page-otimizacoes'].forEach(p=>document.getElementById(p).classList.remove('active'));
+function openCliente(idx) {
+  currentIdx = idx;
+  document.getElementById('page-clientes').classList.remove('active');
+  document.getElementById('page-otimizacoes').classList.remove('active');
   document.getElementById('page-cliente').classList.add('active');
-  document.getElementById('btnNovoCliente').style.display='none';
-  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('btnNovoCliente').style.display = 'none';
+  document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.remove('active'); });
   renderClientePage();
 }
 
-function goMain(){
+function goMain() {
   document.getElementById('page-cliente').classList.remove('active');
   document.getElementById('page-clientes').classList.add('active');
-  document.getElementById('btnNovoCliente').style.display='';
-  document.querySelectorAll('.nav-tab').forEach((el,i)=>el.classList.toggle('active',i===0));
-  currentIdx=-1; loadClientes();
+  document.getElementById('btnNovoCliente').style.display = '';
+  document.querySelectorAll('.nav-tab').forEach(function(el, i){ el.classList.toggle('active', i === 0); });
+  currentIdx = -1;
+  loadClientes();
 }
 
-function renderClientePage(){
-  const c=clientes[currentIdx];
-  document.getElementById('ch-nome').textContent=c.nome;
-  document.getElementById('ch-meta').innerHTML=`
-    <span class="badge ${pCls[c.plat]||'b-outro'}" style="background:rgba(255,255,255,.15);color:#fff">${c.plat||'—'}</span>
-    ${c.tipo?`<span class="ch-tipo">${c.tipo}</span>`:''}
-    <span class="ch-badge">${c.status||'Ativo'}</span>
-  `;
-  document.getElementById('ch-info').innerHTML=`
-    <div class="ch-info-box"><div class="ch-info-label">Plataforma</div><div class="ch-info-val">${c.plat||'—'}</div></div>
-    ${(c.plat==='Meta Ads'||c.plat==='Meta + Google')?`<div class="ch-info-box"><div class="ch-info-label">Meta — invest./dia</div><div class="ch-info-val">${c.vlr_meta?'R
+function renderClientePage() {
+  var c = clientes[currentIdx];
+  document.getElementById('ch-nome').textContent = c.nome;
+  document.getElementById('ch-meta').innerHTML =
+    '<span class="badge ' + (pCls[c.plat]||'b-outro') + '" style="background:rgba(255,255,255,.15);color:#fff">' + (c.plat||'—') + '</span>' +
+    (c.tipo ? '<span class="ch-tipo">' + c.tipo + '</span>' : '') +
+    '<span class="ch-badge">' + (c.status||'Ativo') + '</span>';
+
+  var infoBoxes = '<div class="ch-info-box"><div class="ch-info-label">Plataforma</div><div class="ch-info-val">' + (c.plat||'—') + '</div></div>';
+  if (c.plat === 'Meta Ads' || c.plat === 'Meta + Google')
+    infoBoxes += '<div class="ch-info-box"><div class="ch-info-label">Meta — invest./dia</div><div class="ch-info-val">' + (c.vlr_meta ? 'R$' + parseFloat(c.vlr_meta).toLocaleString('pt-BR') : '—') + '</div></div>';
+  if (c.plat === 'Google Ads' || c.plat === 'Meta + Google')
+    infoBoxes += '<div class="ch-info-box"><div class="ch-info-label">Google — invest./dia</div><div class="ch-info-val">' + (c.vlr_google ? 'R$' + parseFloat(c.vlr_google).toLocaleString('pt-BR') : '—') + '</div></div>';
+  if (c.plat === 'Outro' && c.vlr_outro)
+    infoBoxes += '<div class="ch-info-box"><div class="ch-info-label">Invest./dia</div><div class="ch-info-val">R$' + parseFloat(c.vlr_outro).toLocaleString('pt-BR') + '</div></div>';
+  infoBoxes += '<div class="ch-info-box"><div class="ch-info-label">Início do ciclo</div><div class="ch-info-val">' + (c.ciclo ? new Date(c.ciclo + 'T12:00:00').toLocaleDateString('pt-BR') : '—') + '</div></div>';
+
+  var grid = document.getElementById('ch-info');
+  var count = (infoBoxes.match(/ch-info-box/g)||[]).length;
+  grid.style.gridTemplateColumns = 'repeat(' + count + ', 1fr)';
+  grid.innerHTML = infoBoxes;
+
   renderFeed();
-  document.getElementById('notasCliente').value=c.notas||'';
+  document.getElementById('notasCliente').value = c.notas || '';
 }
 
-function renderFeed(){
-  const c=clientes[currentIdx],msgs=c.feed||[];
-  const el=document.getElementById('feedMessages');
-  if(!msgs.length){el.innerHTML=`<div class="no-data">📋 Nenhuma otimização registrada ainda.<br><span style="font-size:12px">Use o campo abaixo para começar.</span></div>`;return;}
-  el.innerHTML=msgs.slice().reverse().map((m,ri)=>{
-    const i=msgs.length-1-ri;
-    return `<div class="feed-msg">
-      <div class="feed-msg-date">📅 ${fmtDatetime(m.ts)}</div>
-      <div class="feed-msg-text">${escHtml(m.text)}</div>
-      <div class="feed-msg-del"><button class="btn btn-sm btn-danger" onclick="deleteFeedMsg(${i})">Apagar</button></div>
-    </div>`;
+function renderFeed() {
+  var c = clientes[currentIdx], msgs = c.feed || [];
+  var el = document.getElementById('feedMessages');
+  if (!msgs.length) { el.innerHTML = '<div class="no-data">📋 Nenhuma otimização registrada ainda.<br><span style="font-size:12px">Use o campo abaixo para começar.</span></div>'; return; }
+  el.innerHTML = msgs.slice().reverse().map(function(m, ri) {
+    var i = msgs.length - 1 - ri;
+    return '<div class="feed-msg">' +
+      '<div class="feed-msg-date">📅 ' + fmtDatetime(m.ts) + '</div>' +
+      '<div class="feed-msg-text">' + escHtml(m.text) + '</div>' +
+      '<div class="feed-msg-del"><button class="btn btn-sm btn-danger" onclick="deleteFeedMsg(' + i + ')">Apagar</button></div>' +
+    '</div>';
   }).join('');
 }
 
-async function addFeedMsg(){
-  const inp=document.getElementById('feedInput'),text=inp.value.trim();
-  if(!text) return;
-  const c=clientes[currentIdx];
-  const feed=[...(c.feed||[]),{ts:new Date().toISOString(),text}];
-  inp.value=''; status('Salvando...');
-  await api('patch',`clientes?id=eq.${c.id}`,{feed});
-  clientes[currentIdx].feed=feed; status('Salvo ✓'); renderFeed();
+async function addFeedMsg() {
+  var inp = document.getElementById('feedInput'), text = inp.value.trim();
+  if (!text) return;
+  var c = clientes[currentIdx];
+  var feed = (c.feed || []).concat([{ ts: new Date().toISOString(), text: text }]);
+  inp.value = ''; status('Salvando...');
+  await api('patch', 'clientes?id=eq.' + c.id, { feed: feed });
+  clientes[currentIdx].feed = feed; status('Salvo ✓'); renderFeed();
 }
 
-async function deleteFeedMsg(i){
-  if(!confirm('Apagar esta otimização?')) return;
-  const c=clientes[currentIdx],feed=[...(c.feed||[])];
-  feed.splice(i,1);
-  await api('patch',`clientes?id=eq.${c.id}`,{feed});
-  clientes[currentIdx].feed=feed; status('Removido ✓'); renderFeed();
+async function deleteFeedMsg(i) {
+  if (!confirm('Apagar esta otimização?')) return;
+  var c = clientes[currentIdx], feed = (c.feed || []).slice();
+  feed.splice(i, 1);
+  await api('patch', 'clientes?id=eq.' + c.id, { feed: feed });
+  clientes[currentIdx].feed = feed; status('Removido ✓'); renderFeed();
 }
 
-async function saveNotasCurrent(){
-  const notas=document.getElementById('notasCliente').value,c=clientes[currentIdx];
-  await api('patch',`clientes?id=eq.${c.id}`,{notas});
-  clientes[currentIdx].notas=notas; status('Anotações salvas ✓');
+async function saveNotasCurrent() {
+  var notas = document.getElementById('notasCliente').value, c = clientes[currentIdx];
+  await api('patch', 'clientes?id=eq.' + c.id, { notas: notas });
+  clientes[currentIdx].notas = notas; status('Anotações salvas ✓');
 }
 
-async function deleteCurrentCliente(){
-  if(!confirm('Excluir '+clientes[currentIdx].nome+'? Não pode ser desfeito.')) return;
-  const id=clientes[currentIdx].id;
-  await api('delete',`clientes?id=eq.${id}`);
-  clientes.splice(currentIdx,1); status('Excluído ✓'); goMain();
+async function deleteCurrentCliente() {
+  if (!confirm('Excluir ' + clientes[currentIdx].nome + '? Não pode ser desfeito.')) return;
+  var id = clientes[currentIdx].id;
+  await api('delete', 'clientes?id=eq.' + id);
+  clientes.splice(currentIdx, 1); status('Excluído ✓'); goMain();
 }
 
-async function deleteCliente(idx){
-  if(!confirm('Excluir '+clientes[idx].nome+'?')) return;
-  await api('delete',`clientes?id=eq.${clientes[idx].id}`);
-  clientes.splice(idx,1); status('Excluído ✓'); renderMain();
+async function deleteCliente(idx) {
+  if (!confirm('Excluir ' + clientes[idx].nome + '?')) return;
+  await api('delete', 'clientes?id=eq.' + clientes[idx].id);
+  clientes.splice(idx, 1); status('Excluído ✓'); renderMain();
 }
 
-function editCurrentCliente(){ openModal(currentIdx); }
+function editCurrentCliente() { openModal(currentIdx); }
 
-function renderAllOtim(){
-  const all=[];
-  clientes.forEach(c=>(c.feed||[]).forEach(m=>all.push({...m,nome:c.nome,plat:c.plat})));
-  all.sort((a,b)=>new Date(b.ts)-new Date(a.ts));
-  const el=document.getElementById('allOtimList');
-  if(!all.length){el.innerHTML=`<div class="no-data">Nenhuma otimização registrada ainda.</div>`;return;}
-  el.innerHTML=all.map(m=>`
-    <div class="otim-card">
-      <div class="otim-card-head">
-        <span class="otim-card-name">${m.nome}</span>
-        <span class="badge ${pCls[m.plat]||'b-outro'}">${m.plat||'—'}</span>
-        <span class="otim-card-date">📅 ${fmtDatetime(m.ts)}</span>
-      </div>
-      <div class="otim-card-text">${escHtml(m.text)}</div>
-    </div>
-  `).join('');
-}
-
-function updateInvestFields(){
-  const plat=document.getElementById('f-plat').value;
-  let html='';
-  if(plat==='Meta Ads'||plat==='Meta + Google')
-    html+=`<div style="margin-bottom:${plat==='Meta + Google'?'12px':'0'}"><label style="color:var(--meta)">📘 Meta Ads — Valor diário (R$)</label><input id="f-vlr-meta" type="number" placeholder="Ex: 50" min="0"></div>`;
-  if(plat==='Google Ads'||plat==='Meta + Google')
-    html+=`<div><label style="color:var(--google)">🔍 Google Ads — Valor diário (R$)</label><input id="f-vlr-google" type="number" placeholder="Ex: 30" min="0"></div>`;
-  if(plat==='Outro')
-    html+=`<div><label>Valor diário (R$)</label><input id="f-vlr-outro" type="number" placeholder="Ex: 100" min="0"></div>`;
-  document.getElementById('investInputs').innerHTML=html;
-  if(editIdx>=0){
-    const c=clientes[editIdx];
-    if(document.getElementById('f-vlr-meta')) document.getElementById('f-vlr-meta').value=c.vlr_meta||'';
-    if(document.getElementById('f-vlr-google')) document.getElementById('f-vlr-google').value=c.vlr_google||'';
-    if(document.getElementById('f-vlr-outro')) document.getElementById('f-vlr-outro').value=c.vlr_outro||'';
-  }
-}
-
-function openModal(idx=-1){
-  editIdx=idx;
-  const c=idx>=0?clientes[idx]:{};
-  document.getElementById('modalTitle').textContent=idx>=0?'Editar cliente':'Novo cliente';
-  document.getElementById('f-nome').value=c.nome||'';
-  document.getElementById('f-status').value=c.status||'Ativo';
-  document.getElementById('f-plat').value=c.plat||'Meta Ads';
-  document.getElementById('f-tipo').value=c.tipo||'';
-  document.getElementById('f-ciclo').value=c.ciclo||'';
-  updateInvestFields();
-  document.getElementById('modalBg').classList.add('open');
-}
-function closeModal(){ document.getElementById('modalBg').classList.remove('open'); }
-
-async function saveCliente(){
-  const nome=document.getElementById('f-nome').value.trim();
-  if(!nome){alert('Informe o nome do cliente');return;}
-  const btn=document.getElementById('btnSalvar');
-  btn.disabled=true; btn.textContent='Salvando...';
-  const obj={
-    nome, status: editIdx>=0 ? (clientes[editIdx].status||'Ativo') : 'Ativo',
-    plat:document.getElementById('f-plat').value,
-    tipo:document.getElementById('f-tipo').value.trim(),
-    ciclo:document.getElementById('f-ciclo').value||null,
-    vlr_meta:document.getElementById('f-vlr-meta')?parseFloat(document.getElementById('f-vlr-meta').value)||null:null,
-    vlr_google:document.getElementById('f-vlr-google')?parseFloat(document.getElementById('f-vlr-google').value)||null:null,
-    vlr_outro:document.getElementById('f-vlr-outro')?parseFloat(document.getElementById('f-vlr-outro').value)||null:null,
-  };
-  try{
-    if(editIdx>=0){ await api('patch',`clientes?id=eq.${clientes[editIdx].id}`,obj); Object.assign(clientes[editIdx],obj); }
-    else { const res=await api('post','clientes',{...obj,feed:[],historico:[],notas:''}); clientes.push(res[0]); }
-    status('Salvo ✓'); closeModal();
-    if(currentIdx>=0) renderClientePage(); else renderMain();
-  } finally { btn.disabled=false; btn.textContent='Salvar cliente'; }
-}
-
-document.addEventListener('keydown',e=>{ if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&document.activeElement===document.getElementById('feedInput')) addFeedMsg(); });
-document.getElementById('modalBg').addEventListener('click',e=>{ if(e.target===document.getElementById('modalBg'))closeModal(); });
-
-loadClientes();
-</script>
-</body>
-</html>
-+parseFloat(c.vlr_meta).toLocaleString('pt-BR'):'—'}</div></div>`:''}
-    ${(c.plat==='Google Ads'||c.plat==='Meta + Google')?`<div class="ch-info-box"><div class="ch-info-label">Google — invest./dia</div><div class="ch-info-val">${c.vlr_google?'R
-  renderFeed();
-  document.getElementById('notasCliente').value=c.notas||'';
-}
-
-function renderFeed(){
-  const c=clientes[currentIdx],msgs=c.feed||[];
-  const el=document.getElementById('feedMessages');
-  if(!msgs.length){el.innerHTML=`<div class="no-data">📋 Nenhuma otimização registrada ainda.<br><span style="font-size:12px">Use o campo abaixo para começar.</span></div>`;return;}
-  el.innerHTML=msgs.slice().reverse().map((m,ri)=>{
-    const i=msgs.length-1-ri;
-    return `<div class="feed-msg">
-      <div class="feed-msg-date">📅 ${fmtDatetime(m.ts)}</div>
-      <div class="feed-msg-text">${escHtml(m.text)}</div>
-      <div class="feed-msg-del"><button class="btn btn-sm btn-danger" onclick="deleteFeedMsg(${i})">Apagar</button></div>
-    </div>`;
+function renderAllOtim() {
+  var all = [];
+  clientes.forEach(function(c){ (c.feed||[]).forEach(function(m){ all.push({ ts: m.ts, text: m.text, nome: c.nome, plat: c.plat }); }); });
+  all.sort(function(a,b){ return new Date(b.ts) - new Date(a.ts); });
+  var el = document.getElementById('allOtimList');
+  if (!all.length) { el.innerHTML = '<div class="no-data">Nenhuma otimização registrada ainda.</div>'; return; }
+  el.innerHTML = all.map(function(m){
+    return '<div class="otim-card">' +
+      '<div class="otim-card-head">' +
+        '<span class="otim-card-name">' + m.nome + '</span>' +
+        '<span class="badge ' + (pCls[m.plat]||'b-outro') + '">' + (m.plat||'—') + '</span>' +
+        '<span class="otim-card-date">📅 ' + fmtDatetime(m.ts) + '</span>' +
+      '</div>' +
+      '<div class="otim-card-text">' + escHtml(m.text) + '</div>' +
+    '</div>';
   }).join('');
 }
 
-async function addFeedMsg(){
-  const inp=document.getElementById('feedInput'),text=inp.value.trim();
-  if(!text) return;
-  const c=clientes[currentIdx];
-  const feed=[...(c.feed||[]),{ts:new Date().toISOString(),text}];
-  inp.value=''; status('Salvando...');
-  await api('patch',`clientes?id=eq.${c.id}`,{feed});
-  clientes[currentIdx].feed=feed; status('Salvo ✓'); renderFeed();
-}
-
-async function deleteFeedMsg(i){
-  if(!confirm('Apagar esta otimização?')) return;
-  const c=clientes[currentIdx],feed=[...(c.feed||[])];
-  feed.splice(i,1);
-  await api('patch',`clientes?id=eq.${c.id}`,{feed});
-  clientes[currentIdx].feed=feed; status('Removido ✓'); renderFeed();
-}
-
-async function saveNotasCurrent(){
-  const notas=document.getElementById('notasCliente').value,c=clientes[currentIdx];
-  await api('patch',`clientes?id=eq.${c.id}`,{notas});
-  clientes[currentIdx].notas=notas; status('Anotações salvas ✓');
-}
-
-async function deleteCurrentCliente(){
-  if(!confirm('Excluir '+clientes[currentIdx].nome+'? Não pode ser desfeito.')) return;
-  const id=clientes[currentIdx].id;
-  await api('delete',`clientes?id=eq.${id}`);
-  clientes.splice(currentIdx,1); status('Excluído ✓'); goMain();
-}
-
-async function deleteCliente(idx){
-  if(!confirm('Excluir '+clientes[idx].nome+'?')) return;
-  await api('delete',`clientes?id=eq.${clientes[idx].id}`);
-  clientes.splice(idx,1); status('Excluído ✓'); renderMain();
-}
-
-function editCurrentCliente(){ openModal(currentIdx); }
-
-function renderAllOtim(){
-  const all=[];
-  clientes.forEach(c=>(c.feed||[]).forEach(m=>all.push({...m,nome:c.nome,plat:c.plat})));
-  all.sort((a,b)=>new Date(b.ts)-new Date(a.ts));
-  const el=document.getElementById('allOtimList');
-  if(!all.length){el.innerHTML=`<div class="no-data">Nenhuma otimização registrada ainda.</div>`;return;}
-  el.innerHTML=all.map(m=>`
-    <div class="otim-card">
-      <div class="otim-card-head">
-        <span class="otim-card-name">${m.nome}</span>
-        <span class="badge ${pCls[m.plat]||'b-outro'}">${m.plat||'—'}</span>
-        <span class="otim-card-date">📅 ${fmtDatetime(m.ts)}</span>
-      </div>
-      <div class="otim-card-text">${escHtml(m.text)}</div>
-    </div>
-  `).join('');
-}
-
-function updateInvestFields(){
-  const plat=document.getElementById('f-plat').value;
-  let html='';
-  if(plat==='Meta Ads'||plat==='Meta + Google')
-    html+=`<div style="margin-bottom:${plat==='Meta + Google'?'12px':'0'}"><label style="color:var(--meta)">📘 Meta Ads — Valor diário (R$)</label><input id="f-vlr-meta" type="number" placeholder="Ex: 50" min="0"></div>`;
-  if(plat==='Google Ads'||plat==='Meta + Google')
-    html+=`<div><label style="color:var(--google)">🔍 Google Ads — Valor diário (R$)</label><input id="f-vlr-google" type="number" placeholder="Ex: 30" min="0"></div>`;
-  if(plat==='Outro')
-    html+=`<div><label>Valor diário (R$)</label><input id="f-vlr-outro" type="number" placeholder="Ex: 100" min="0"></div>`;
-  document.getElementById('investInputs').innerHTML=html;
-  if(editIdx>=0){
-    const c=clientes[editIdx];
-    if(document.getElementById('f-vlr-meta')) document.getElementById('f-vlr-meta').value=c.vlr_meta||'';
-    if(document.getElementById('f-vlr-google')) document.getElementById('f-vlr-google').value=c.vlr_google||'';
-    if(document.getElementById('f-vlr-outro')) document.getElementById('f-vlr-outro').value=c.vlr_outro||'';
+function updateInvestFields() {
+  var plat = document.getElementById('f-plat').value;
+  var html = '';
+  if (plat === 'Meta Ads' || plat === 'Meta + Google')
+    html += '<div style="margin-bottom:' + (plat === 'Meta + Google' ? '12px' : '0') + '"><label style="color:var(--meta)">📘 Meta Ads — Valor diário (R$)</label><input id="f-vlr-meta" type="number" placeholder="Ex: 50" min="0"></div>';
+  if (plat === 'Google Ads' || plat === 'Meta + Google')
+    html += '<div><label style="color:var(--google)">🔍 Google Ads — Valor diário (R$)</label><input id="f-vlr-google" type="number" placeholder="Ex: 30" min="0"></div>';
+  if (plat === 'Outro')
+    html += '<div><label>Valor diário (R$)</label><input id="f-vlr-outro" type="number" placeholder="Ex: 100" min="0"></div>';
+  document.getElementById('investInputs').innerHTML = html;
+  if (editIdx >= 0) {
+    var c = clientes[editIdx];
+    if (document.getElementById('f-vlr-meta')) document.getElementById('f-vlr-meta').value = c.vlr_meta || '';
+    if (document.getElementById('f-vlr-google')) document.getElementById('f-vlr-google').value = c.vlr_google || '';
+    if (document.getElementById('f-vlr-outro')) document.getElementById('f-vlr-outro').value = c.vlr_outro || '';
   }
 }
 
-function openModal(idx=-1){
-  editIdx=idx;
-  const c=idx>=0?clientes[idx]:{};
-  document.getElementById('modalTitle').textContent=idx>=0?'Editar cliente':'Novo cliente';
-  document.getElementById('f-nome').value=c.nome||'';
-  document.getElementById('f-status').value=c.status||'Ativo';
-  document.getElementById('f-plat').value=c.plat||'Meta Ads';
-  document.getElementById('f-tipo').value=c.tipo||'';
-  document.getElementById('f-ciclo').value=c.ciclo||'';
+function openModal(idx) {
+  if (idx === undefined) idx = -1;
+  editIdx = idx;
+  var c = idx >= 0 ? clientes[idx] : {};
+  document.getElementById('modalTitle').textContent = idx >= 0 ? 'Editar cliente' : 'Novo cliente';
+  document.getElementById('f-nome').value = c.nome || '';
+  document.getElementById('f-plat').value = c.plat || 'Meta Ads';
+  document.getElementById('f-tipo').value = c.tipo || '';
+  document.getElementById('f-ciclo').value = c.ciclo || '';
   updateInvestFields();
   document.getElementById('modalBg').classList.add('open');
 }
-function closeModal(){ document.getElementById('modalBg').classList.remove('open'); }
 
-async function saveCliente(){
-  const nome=document.getElementById('f-nome').value.trim();
-  if(!nome){alert('Informe o nome do cliente');return;}
-  const btn=document.getElementById('btnSalvar');
-  btn.disabled=true; btn.textContent='Salvando...';
-  const obj={
-    nome, status:document.getElementById('f-status').value,
-    plat:document.getElementById('f-plat').value,
-    tipo:document.getElementById('f-tipo').value.trim(),
-    ciclo:document.getElementById('f-ciclo').value||null,
-    vlr_meta:document.getElementById('f-vlr-meta')?parseFloat(document.getElementById('f-vlr-meta').value)||null:null,
-    vlr_google:document.getElementById('f-vlr-google')?parseFloat(document.getElementById('f-vlr-google').value)||null:null,
-    vlr_outro:document.getElementById('f-vlr-outro')?parseFloat(document.getElementById('f-vlr-outro').value)||null:null,
+function closeModal() { document.getElementById('modalBg').classList.remove('open'); }
+
+async function saveCliente() {
+  var nome = document.getElementById('f-nome').value.trim();
+  if (!nome) { alert('Informe o nome do cliente'); return; }
+  var btn = document.getElementById('btnSalvar');
+  btn.disabled = true; btn.textContent = 'Salvando...';
+  var obj = {
+    nome: nome,
+    status: editIdx >= 0 ? (clientes[editIdx].status || 'Ativo') : 'Ativo',
+    plat: document.getElementById('f-plat').value,
+    tipo: document.getElementById('f-tipo').value.trim(),
+    ciclo: document.getElementById('f-ciclo').value || null,
+    vlr_meta: document.getElementById('f-vlr-meta') ? (parseFloat(document.getElementById('f-vlr-meta').value) || null) : null,
+    vlr_google: document.getElementById('f-vlr-google') ? (parseFloat(document.getElementById('f-vlr-google').value) || null) : null,
+    vlr_outro: document.getElementById('f-vlr-outro') ? (parseFloat(document.getElementById('f-vlr-outro').value) || null) : null
   };
-  try{
-    if(editIdx>=0){ await api('patch',`clientes?id=eq.${clientes[editIdx].id}`,obj); Object.assign(clientes[editIdx],obj); }
-    else { const res=await api('post','clientes',{...obj,feed:[],historico:[],notas:''}); clientes.push(res[0]); }
+  try {
+    if (editIdx >= 0) {
+      await api('patch', 'clientes?id=eq.' + clientes[editIdx].id, obj);
+      Object.assign(clientes[editIdx], obj);
+    } else {
+      var res = await api('post', 'clientes', Object.assign({}, obj, { feed: [], historico: [], notas: '' }));
+      clientes.push(res[0]);
+    }
     status('Salvo ✓'); closeModal();
-    if(currentIdx>=0) renderClientePage(); else renderMain();
-  } finally { btn.disabled=false; btn.textContent='Salvar cliente'; }
-}
-
-document.addEventListener('keydown',e=>{ if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&document.activeElement===document.getElementById('feedInput')) addFeedMsg(); });
-document.getElementById('modalBg').addEventListener('click',e=>{ if(e.target===document.getElementById('modalBg'))closeModal(); });
-
-loadClientes();
-</script>
-</body>
-</html>
-+parseFloat(c.vlr_google).toLocaleString('pt-BR'):'—'}</div></div>`:''}
-    ${c.plat==='Outro'&&c.vlr_outro?`<div class="ch-info-box"><div class="ch-info-label">Invest./dia</div><div class="ch-info-val">R${parseFloat(c.vlr_outro).toLocaleString('pt-BR')}</div></div>`:''}
-    <div class="ch-info-box"><div class="ch-info-label">Início do ciclo</div><div class="ch-info-val">${c.ciclo?new Date(c.ciclo+'T12:00:00').toLocaleDateString('pt-BR'):'—'}</div></div>
-  `;
-  renderFeed();
-  document.getElementById('notasCliente').value=c.notas||'';
-}
-
-function renderFeed(){
-  const c=clientes[currentIdx],msgs=c.feed||[];
-  const el=document.getElementById('feedMessages');
-  if(!msgs.length){el.innerHTML=`<div class="no-data">📋 Nenhuma otimização registrada ainda.<br><span style="font-size:12px">Use o campo abaixo para começar.</span></div>`;return;}
-  el.innerHTML=msgs.slice().reverse().map((m,ri)=>{
-    const i=msgs.length-1-ri;
-    return `<div class="feed-msg">
-      <div class="feed-msg-date">📅 ${fmtDatetime(m.ts)}</div>
-      <div class="feed-msg-text">${escHtml(m.text)}</div>
-      <div class="feed-msg-del"><button class="btn btn-sm btn-danger" onclick="deleteFeedMsg(${i})">Apagar</button></div>
-    </div>`;
-  }).join('');
-}
-
-async function addFeedMsg(){
-  const inp=document.getElementById('feedInput'),text=inp.value.trim();
-  if(!text) return;
-  const c=clientes[currentIdx];
-  const feed=[...(c.feed||[]),{ts:new Date().toISOString(),text}];
-  inp.value=''; status('Salvando...');
-  await api('patch',`clientes?id=eq.${c.id}`,{feed});
-  clientes[currentIdx].feed=feed; status('Salvo ✓'); renderFeed();
-}
-
-async function deleteFeedMsg(i){
-  if(!confirm('Apagar esta otimização?')) return;
-  const c=clientes[currentIdx],feed=[...(c.feed||[])];
-  feed.splice(i,1);
-  await api('patch',`clientes?id=eq.${c.id}`,{feed});
-  clientes[currentIdx].feed=feed; status('Removido ✓'); renderFeed();
-}
-
-async function saveNotasCurrent(){
-  const notas=document.getElementById('notasCliente').value,c=clientes[currentIdx];
-  await api('patch',`clientes?id=eq.${c.id}`,{notas});
-  clientes[currentIdx].notas=notas; status('Anotações salvas ✓');
-}
-
-async function deleteCurrentCliente(){
-  if(!confirm('Excluir '+clientes[currentIdx].nome+'? Não pode ser desfeito.')) return;
-  const id=clientes[currentIdx].id;
-  await api('delete',`clientes?id=eq.${id}`);
-  clientes.splice(currentIdx,1); status('Excluído ✓'); goMain();
-}
-
-async function deleteCliente(idx){
-  if(!confirm('Excluir '+clientes[idx].nome+'?')) return;
-  await api('delete',`clientes?id=eq.${clientes[idx].id}`);
-  clientes.splice(idx,1); status('Excluído ✓'); renderMain();
-}
-
-function editCurrentCliente(){ openModal(currentIdx); }
-
-function renderAllOtim(){
-  const all=[];
-  clientes.forEach(c=>(c.feed||[]).forEach(m=>all.push({...m,nome:c.nome,plat:c.plat})));
-  all.sort((a,b)=>new Date(b.ts)-new Date(a.ts));
-  const el=document.getElementById('allOtimList');
-  if(!all.length){el.innerHTML=`<div class="no-data">Nenhuma otimização registrada ainda.</div>`;return;}
-  el.innerHTML=all.map(m=>`
-    <div class="otim-card">
-      <div class="otim-card-head">
-        <span class="otim-card-name">${m.nome}</span>
-        <span class="badge ${pCls[m.plat]||'b-outro'}">${m.plat||'—'}</span>
-        <span class="otim-card-date">📅 ${fmtDatetime(m.ts)}</span>
-      </div>
-      <div class="otim-card-text">${escHtml(m.text)}</div>
-    </div>
-  `).join('');
-}
-
-function updateInvestFields(){
-  const plat=document.getElementById('f-plat').value;
-  let html='';
-  if(plat==='Meta Ads'||plat==='Meta + Google')
-    html+=`<div style="margin-bottom:${plat==='Meta + Google'?'12px':'0'}"><label style="color:var(--meta)">📘 Meta Ads — Valor diário (R$)</label><input id="f-vlr-meta" type="number" placeholder="Ex: 50" min="0"></div>`;
-  if(plat==='Google Ads'||plat==='Meta + Google')
-    html+=`<div><label style="color:var(--google)">🔍 Google Ads — Valor diário (R$)</label><input id="f-vlr-google" type="number" placeholder="Ex: 30" min="0"></div>`;
-  if(plat==='Outro')
-    html+=`<div><label>Valor diário (R$)</label><input id="f-vlr-outro" type="number" placeholder="Ex: 100" min="0"></div>`;
-  document.getElementById('investInputs').innerHTML=html;
-  if(editIdx>=0){
-    const c=clientes[editIdx];
-    if(document.getElementById('f-vlr-meta')) document.getElementById('f-vlr-meta').value=c.vlr_meta||'';
-    if(document.getElementById('f-vlr-google')) document.getElementById('f-vlr-google').value=c.vlr_google||'';
-    if(document.getElementById('f-vlr-outro')) document.getElementById('f-vlr-outro').value=c.vlr_outro||'';
+    if (currentIdx >= 0) renderClientePage(); else renderMain();
+  } finally {
+    btn.disabled = false; btn.textContent = 'Salvar cliente';
   }
 }
 
-function openModal(idx=-1){
-  editIdx=idx;
-  const c=idx>=0?clientes[idx]:{};
-  document.getElementById('modalTitle').textContent=idx>=0?'Editar cliente':'Novo cliente';
-  document.getElementById('f-nome').value=c.nome||'';
-  document.getElementById('f-status').value=c.status||'Ativo';
-  document.getElementById('f-plat').value=c.plat||'Meta Ads';
-  document.getElementById('f-tipo').value=c.tipo||'';
-  document.getElementById('f-ciclo').value=c.ciclo||'';
-  updateInvestFields();
-  document.getElementById('modalBg').classList.add('open');
-}
-function closeModal(){ document.getElementById('modalBg').classList.remove('open'); }
-
-async function saveCliente(){
-  const nome=document.getElementById('f-nome').value.trim();
-  if(!nome){alert('Informe o nome do cliente');return;}
-  const btn=document.getElementById('btnSalvar');
-  btn.disabled=true; btn.textContent='Salvando...';
-  const obj={
-    nome, status:document.getElementById('f-status').value,
-    plat:document.getElementById('f-plat').value,
-    tipo:document.getElementById('f-tipo').value.trim(),
-    ciclo:document.getElementById('f-ciclo').value||null,
-    vlr_meta:document.getElementById('f-vlr-meta')?parseFloat(document.getElementById('f-vlr-meta').value)||null:null,
-    vlr_google:document.getElementById('f-vlr-google')?parseFloat(document.getElementById('f-vlr-google').value)||null:null,
-    vlr_outro:document.getElementById('f-vlr-outro')?parseFloat(document.getElementById('f-vlr-outro').value)||null:null,
-  };
-  try{
-    if(editIdx>=0){ await api('patch',`clientes?id=eq.${clientes[editIdx].id}`,obj); Object.assign(clientes[editIdx],obj); }
-    else { const res=await api('post','clientes',{...obj,feed:[],historico:[],notas:''}); clientes.push(res[0]); }
-    status('Salvo ✓'); closeModal();
-    if(currentIdx>=0) renderClientePage(); else renderMain();
-  } finally { btn.disabled=false; btn.textContent='Salvar cliente'; }
-}
-
-document.addEventListener('keydown',e=>{ if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&document.activeElement===document.getElementById('feedInput')) addFeedMsg(); });
-document.getElementById('modalBg').addEventListener('click',e=>{ if(e.target===document.getElementById('modalBg'))closeModal(); });
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && document.activeElement === document.getElementById('feedInput')) addFeedMsg();
+});
+document.getElementById('modalBg').addEventListener('click', function(e) {
+  if (e.target === document.getElementById('modalBg')) closeModal();
+});
 
 loadClientes();
 </script>
