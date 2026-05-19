@@ -1025,9 +1025,15 @@ select.input{
       </div>
       <div id="investInputs"></div>
     </div>
-    <div class="field">
-      <label>Início do ciclo</label>
-      <input class="input" id="f-ciclo" type="date">
+    <div class="field-row" style="margin-bottom:0">
+      <div>
+        <label>Início do ciclo</label>
+        <input class="input" id="f-ciclo" type="date">
+      </div>
+      <div>
+        <label>Final do ciclo <span style="color:var(--t3);font-weight:400">(opcional)</span></label>
+        <input class="input" id="f-ciclo-fim" type="date">
+      </div>
     </div>
   </div>
   <div class="drawer-foot">
@@ -1255,8 +1261,8 @@ function renderMetrics(){
   var iconMoney = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v12M5 5h4.5a1.5 1.5 0 010 3h-3a1.5 1.5 0 000 3H11"/></svg>';
 
   $('mainMetrics').innerHTML =
-    metricCard('m-ativos', iconUsers, 'brand', 'Ativos', "setMetricFilter('ativos')") +
-    metricCard('m-inativos', iconPause, 'gray', 'Inativos', "setMetricFilter('inativos')") +
+    metricCard('m-ativos', iconUsers, 'brand', 'Ativos', null) +
+    metricCard('m-inativos', iconPause, 'gray', 'Inativos', null) +
     metricCard('m-meta', iconMeta, 'meta', 'Em Meta Ads', "setMetricFilter('Meta Ads')") +
     metricCard('m-google', iconGoogle, 'google', 'Em Google Ads', "setMetricFilter('Google Ads')") +
     metricCard('m-invest', iconMoney, 'success', 'Invest. total/dia', null, true);
@@ -1280,27 +1286,14 @@ function metricCard(id, icon, color, label, onclick, smallVal){
     '</div>';
 }
 function refreshMetricActive(){
-  ['m-ativos','m-inativos','m-meta','m-google'].forEach(function(id){
-    var el = $(id); if(!el) return;
-    var on = false;
-    if(id==='m-ativos') on = state._statusFilter === 'Ativo';
-    if(id==='m-inativos') on = state._statusFilter === 'Inativo';
-    if(id==='m-meta') on = state.platFilter === 'Meta Ads';
-    if(id==='m-google') on = state.platFilter === 'Google Ads';
-    el.classList.toggle('active', on);
-  });
+  var elMeta = $('m-meta'), elGoogle = $('m-google');
+  if(elMeta) elMeta.classList.toggle('active', state.platFilter === 'Meta Ads');
+  if(elGoogle) elGoogle.classList.toggle('active', state.platFilter === 'Google Ads');
 }
 function setMetricFilter(key){
-  if(key === 'ativos'){
-    state._statusFilter = state._statusFilter === 'Ativo' ? null : 'Ativo';
-  } else if(key === 'inativos'){
-    state._statusFilter = state._statusFilter === 'Inativo' ? null : 'Inativo';
-  } else if(key === 'Meta Ads' || key === 'Google Ads'){
+  if(key === 'Meta Ads' || key === 'Google Ads'){
     setPlatFilter(state.platFilter === key ? '' : key);
-    return;
   }
-  refreshMetricActive();
-  renderBoard();
 }
 
 /* FILTROS + SORT */
@@ -1353,7 +1346,6 @@ function applyFilters(arr){
     if(q && !c.nome.toLowerCase().includes(q)) return false;
     if(state.platFilter && c.plat !== state.platFilter) return false;
     if(state.attention && !needsAttention(c)) return false;
-    if(state._statusFilter && (c.status||'Ativo') !== state._statusFilter) return false;
     return true;
   });
 }
@@ -1639,6 +1631,7 @@ function renderClientePage(){
   if(c.plat==='Outro' && c.vlr_outro)
     stats.push({label:'Invest./dia', val: 'R$ ' + parseFloat(c.vlr_outro).toLocaleString('pt-BR')});
   stats.push({label:'Início do ciclo', val: c.ciclo ? new Date(c.ciclo+'T12:00:00').toLocaleDateString('pt-BR') : '—'});
+  if(c.ciclo_fim) stats.push({label:'Final do ciclo', val: new Date(c.ciclo_fim+'T12:00:00').toLocaleDateString('pt-BR')});
 
   var grid = $('ch-info');
   grid.style.gridTemplateColumns = 'repeat(' + stats.length + ',1fr)';
@@ -1826,6 +1819,7 @@ function openDrawer(idx){
   $('f-plat').value = c.plat || 'Meta Ads';
   $('f-tipo').value = c.tipo || '';
   $('f-ciclo').value = c.ciclo || '';
+  $('f-ciclo-fim').value = c.ciclo_fim || '';
   updateInvestFields();
   $('drawerBg').classList.add('open');
   $('drawer').classList.add('open');
@@ -1847,6 +1841,7 @@ function saveCliente(){
     plat: $('f-plat').value,
     tipo: $('f-tipo').value.trim(),
     ciclo: $('f-ciclo').value || null,
+    ciclo_fim: $('f-ciclo-fim').value || null,
     vlr_meta: $('f-vlr-meta') ? (parseFloat($('f-vlr-meta').value)||null) : null,
     vlr_google: $('f-vlr-google') ? (parseFloat($('f-vlr-google').value)||null) : null,
     vlr_outro: $('f-vlr-outro') ? (parseFloat($('f-vlr-outro').value)||null) : null
